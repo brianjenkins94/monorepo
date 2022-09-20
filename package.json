@@ -1,0 +1,25 @@
+{
+  "name": "monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "*",
+    "turbo": "latest"
+  },
+  "dependencies": {},
+  "packageManager": "npm@8.5.5"
+}
