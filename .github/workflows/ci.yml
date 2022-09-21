@@ -1,0 +1,100 @@
+{
+	"name": "ci",
+	"on": {
+		"push": {
+			"branches": [
+				"main"
+			]
+		}
+	},
+	"jobs": {
+		"build": {
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{
+					"uses": "actions/checkout@v2"
+				},
+        {
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 18,
+            "cache": "npm"
+          }
+        },
+				{
+					"run": "npm install"
+				},
+				{
+					"run": "npm run build"
+				}
+			]
+		},
+    "lint": {
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{
+					"uses": "actions/checkout@v2"
+				},
+        {
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 18,
+            "cache": "npm"
+          }
+        },
+				{
+					"run": "npm install eslint@7.32.0 typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser"
+				},
+				{
+					"run": "npm run lint"
+				}
+			]
+		},
+		"test": {
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{
+					"uses": "actions/checkout@v2"
+				},
+        {
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 18,
+            "cache": "npm"
+          }
+        },
+				{
+					"run": "npm install"
+				},
+				{
+					"run": "npm run test"
+				}
+			]
+		},
+		"publish": {
+			"runs-on": "ubuntu-latest",
+			"needs": ["lint", "build", "test"],
+			"env": {
+				"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
+			},
+			"steps": [
+				{
+					"uses": "actions/checkout@v2"
+				},
+        {
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 18,
+            "cache": "npm"
+          }
+        },
+				{
+					"run": "npm build"
+				},
+				{
+					"run": "npm publish"
+				}
+			]
+		}
+	}
+}

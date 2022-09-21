@@ -14,12 +14,11 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "test": "turbo run test"
   },
   "devDependencies": {
-    "eslint-config-custom": "*",
     "turbo": "latest"
   },
-  "dependencies": {},
   "packageManager": "npm@8.5.5"
 }

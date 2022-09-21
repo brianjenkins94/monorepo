@@ -116,7 +116,7 @@ function findRepositoryTextFiles(cwd = baseDirectory) {
 	const options = {
 		"cwd": cwd,
 		"encoding": "utf8"
-	} as any;
+	};
 
 	if (process.platform === "win32") {
 		const bash = path.join(process.env["ProgramW6432"], "Git", "usr", "bin", "bash.exe");
