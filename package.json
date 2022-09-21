@@ -18,7 +18,11 @@
     "test": "turbo run test"
   },
   "devDependencies": {
-    "turbo": "latest"
+    "@typescript-eslint/eslint-plugin": "^latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "^7.32.0",
+    "turbo": "latest",
+    "typescript": "latest"
   },
   "packageManager": "npm@8.5.5"
 }

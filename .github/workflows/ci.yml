@@ -41,7 +41,7 @@
           }
         },
 				{
-					"run": "npm install eslint@7.32.0 typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser"
+					"run": "npm install"
 				},
 				{
 					"run": "npm run lint"
