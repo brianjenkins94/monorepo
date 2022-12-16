@@ -10,9 +10,7 @@
   "scripts": {
     "cypress": "CODE=0 ; (npm start & { npx cypress run ; CODE=$? ; kill -INT $(jobs -p) ; }) ; (exit $CODE)",
     "cypress-static": "CODE=0 ; npm run build && (npm run serve & { npx cypress run --config baseUrl=http://localhost:8080/ ; CODE=$? ; kill -INT $(jobs -p) ; }) ; (exit $CODE)",
-    "build": "next build # && npm run postbuild && next export && npm run postexport",
-    "postbuild": "node --experimental-specifier-resolution=node --loader=ts-node/esm scripts/postbuild.ts",
-    "postexport": "node --experimental-specifier-resolution=node --loader=ts-node/esm scripts/postexport.ts",
+    "build": "next build",
     "purge": "rm -rf .next out package-lock.json",
     "serve": "npx http-server . -c-1",
     "start": "node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts"
