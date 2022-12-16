@@ -7,6 +7,16 @@
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
   },
+  "scripts": {
+    "cypress": "CODE=0 ; (npm start & { npx cypress run ; CODE=$? ; kill -INT $(jobs -p) ; }) ; (exit $CODE)",
+    "cypress-static": "CODE=0 ; npm run build && (npm run serve & { npx cypress run --config baseUrl=http://localhost:8080/ ; CODE=$? ; kill -INT $(jobs -p) ; }) ; (exit $CODE)",
+    "build": "next build && npm run postbuild && next export && npm run postexport",
+    "postbuild": "# node --experimental-specifier-resolution=node --loader=ts-node/esm scripts/postbuild.ts",
+    "postexport": "# node --experimental-specifier-resolution=node --loader=ts-node/esm scripts/postexport.ts",
+    "purge": "rm -rf .next out package-lock.json",
+    "serve": "npx http-server . -c-1",
+    "start": "node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts"
+  },
   "author": "Brian Jenkins",
   "license": "MIT",
   "devDependencies": {
@@ -29,7 +39,6 @@
     "next": "latest",
     "nextra-theme-docs": "beta",
     "nextra": "beta",
-    "patch-package": "latest",
     "playwright-chromium": "latest",
     "react-dom": "latest",
     "react": "latest",

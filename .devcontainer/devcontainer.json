@@ -7,8 +7,7 @@
 			"extensions": [
 				"dbaeumer.vscode-eslint",
 				"streetsidesoftware.code-spell-checker",
-				"unifiedjs.vscode-mdx",
-				"unifiedjs.vscode-remark"
+				"unifiedjs.vscode-mdx"
 			],
 			"settings": {
 				"[javascript]": {
@@ -28,18 +27,9 @@
 				"files.trimTrailingWhitespace": true,
 				"javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 				"javascript.format.insertSpaceBeforeFunctionParenthesis": false,
-				"remark.format.rules": {
-					"fences": true
-				},
 				"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 				"typescript.format.insertSpaceBeforeFunctionParenthesis": false
 			}
-		}
-	},
-	"features": {
-		"node": {
-			"version": "18",
-			"nodeGypDependencies": false
 		}
 	},
 	"forwardPorts": [5000, 8080],

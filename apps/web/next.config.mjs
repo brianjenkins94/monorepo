@@ -2,9 +2,14 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import * as url from "url";
 import transpileModules from "next-transpile-modules";
 
-import { __root } from "./config";
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// TODO: Extract to `./config`
+const __root = __dirname;
 
 const withTranspileModules = transpileModules(fs.readdirSync(path.join(__root, "..", "..", "packages")));
 
@@ -62,7 +67,7 @@ export default withTranspileModules({
 		return [];
 	},
 	"rewrites": async function() {
-		return []
+		return [];
 	},
 	"webpack": function(config, options) {
 		config.optimization.minimize = process.env["NODE_ENV"] === "production";

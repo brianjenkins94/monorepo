@@ -12,10 +12,10 @@
 			"runs-on": "ubuntu-latest",
 			"steps": [
 				{
-					"uses": "actions/checkout@v2"
+					"uses": "actions/checkout@v3"
 				},
         {
-          "uses": "actions/setup-node@v2",
+          "uses": "actions/setup-node@v3",
           "with": {
             "node-version": 18
           }
@@ -32,10 +32,10 @@
 			"runs-on": "ubuntu-latest",
 			"steps": [
 				{
-					"uses": "actions/checkout@v2"
+					"uses": "actions/checkout@v3"
 				},
         {
-          "uses": "actions/setup-node@v2",
+          "uses": "actions/setup-node@v3",
           "with": {
             "node-version": 18
           }
@@ -52,10 +52,10 @@
 			"runs-on": "ubuntu-latest",
 			"steps": [
 				{
-					"uses": "actions/checkout@v2"
+					"uses": "actions/checkout@v3"
 				},
         {
-          "uses": "actions/setup-node@v2",
+          "uses": "actions/setup-node@v3",
           "with": {
             "node-version": 18
           }
@@ -68,18 +68,44 @@
 				}
 			]
 		},
-		"publish": {
+		"enumerate": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["lint", "build", "test"],
-			"env": {
-				"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
-			},
+      "needs": ["lint", "build", "test"],
 			"steps": [
 				{
-					"uses": "actions/checkout@v2"
+					"uses": "actions/checkout@v3"
+				}
+			]
+		},
+		"release": {
+      "runs-on": "ubuntu-latest",
+      "needs": ["enumerate"],
+			"steps": [
+        {
+          "uses": "softprops/action-gh-release@v1",
+          "with": {
+            "name": "Release v${{ needs.check_if_version_upgraded.outputs.to_version }}",
+            "tag_name": "v${{ needs.check_if_version_upgraded.outputs.to_version }}",
+            "target_commitish": "${{ github.head_ref || github.ref }}",
+            "generate_release_notes": true,
+            "draft": false,
+            "prerelease": "${{ needs.check_if_version_upgraded.outputs.is_pre_release == 'true' }}"
+          },
+          "env": {
+            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+          }
+        }
+      ]
+		},
+		"publish": {
+			"runs-on": "ubuntu-latest",
+			"needs": ["release"],
+			"steps": [
+				{
+					"uses": "actions/checkout@v3"
 				},
         {
-          "uses": "actions/setup-node@v2",
+          "uses": "actions/setup-node@v3",
           "with": {
             "node-version": 18
           }
