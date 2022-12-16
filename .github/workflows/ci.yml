@@ -74,6 +74,9 @@
 			"steps": [
 				{
 					"uses": "actions/checkout@v3"
+				},
+				{
+					"uses": "actions/checkout@v3"
 				}
 			]
 		},
@@ -83,16 +86,13 @@
 			"steps": [
         {
           "uses": "softprops/action-gh-release@v1",
+          "env": {
+            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+          },
           "with": {
             "name": "Release v${{ needs.check_if_version_upgraded.outputs.to_version }}",
             "tag_name": "v${{ needs.check_if_version_upgraded.outputs.to_version }}",
-            "target_commitish": "${{ github.head_ref || github.ref }}",
-            "generate_release_notes": true,
-            "draft": false,
-            "prerelease": "${{ needs.check_if_version_upgraded.outputs.is_pre_release == 'true' }}"
-          },
-          "env": {
-            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+            "target_commitish": "${{ github.head_ref || github.ref }}"
           }
         }
       ]
@@ -114,7 +114,11 @@
 					"run": "npm build"
 				},
 				{
-					"run": "npm publish"
+					"run": "npm publish",
+					"env": {
+            "NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}",
+            "VERSION": "${{ needs.check_if_version_upgraded.outputs.to_version }}"
+          }
 				}
 			]
 		}

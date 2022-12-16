@@ -9,9 +9,7 @@
     "npm": ">=8.0.0"
   },
   "license": "MIT",
-  "scripts": {
-    "lint": "eslint *.ts*"
-  },
+  "scripts": {},
   "devDependencies": {
     "eslint": "^7.32.0",
     "typescript": "latest"
