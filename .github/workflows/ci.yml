@@ -76,49 +76,10 @@
 					"uses": "actions/checkout@v3"
 				},
 				{
-					"run": "find . -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec git diff HEAD^ --quiet \"{}\" \\; -exec echo \"{}\" \\;"
-				}
-			]
-		},
-		"release": {
-      "runs-on": "ubuntu-latest",
-      "needs": ["enumerate"],
-			"steps": [
-        {
-          "uses": "softprops/action-gh-release@v1",
-          "env": {
-            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
-          },
-          "with": {
-            "name": "Release v${{ needs.check_if_version_upgraded.outputs.to_version }}",
-            "tag_name": "v${{ needs.check_if_version_upgraded.outputs.to_version }}",
-            "target_commitish": "${{ github.head_ref || github.ref }}"
-          }
-        }
-      ]
-		},
-		"publish": {
-			"runs-on": "ubuntu-latest",
-			"needs": ["release"],
-			"steps": [
-				{
-					"uses": "actions/checkout@v3"
-				},
-        {
-          "uses": "actions/setup-node@v3",
-          "with": {
-            "node-version": 18
-          }
-        },
-				{
-					"run": "npm build"
+					"run": "echo \"TAG_NAME=[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec git diff HEAD^ --quiet \"{}\" \\; -exec echo \"{}\" \\; | sed \"s/^/\\\"/;s/\s+/\\\", \\\"/g;s/$/\\\"/\")]\" >> $GITHUB_OUTPUT"
 				},
 				{
-					"run": "npm publish",
-					"env": {
-            "NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}",
-            "VERSION": "${{ needs.check_if_version_upgraded.outputs.to_version }}"
-          }
+					"run": "cat $GITHUB_OUTPUT"
 				}
 			]
 		}
