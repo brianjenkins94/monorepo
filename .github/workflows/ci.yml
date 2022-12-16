@@ -110,7 +110,7 @@
 			"needs": ["release"],
 			"strategy": {
 				"matrix": {
-					"package": "${{  }}"
+					"package": "${{ needs.*.outputs.TAG_NAME }}"
 				}
 			},
 			"steps": [
