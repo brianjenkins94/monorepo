@@ -14,12 +14,12 @@
 				{
 					"uses": "actions/checkout@v3"
 				},
-        {
-          "uses": "actions/setup-node@v3",
-          "with": {
-            "node-version": 18
-          }
-        },
+				{
+					"uses": "actions/setup-node@v3",
+					"with": {
+						"node-version": 18
+					}
+				},
 				{
 					"run": "npm install"
 				},
@@ -28,18 +28,18 @@
 				}
 			]
 		},
-    "lint": {
+		"lint": {
 			"runs-on": "ubuntu-latest",
 			"steps": [
 				{
 					"uses": "actions/checkout@v3"
 				},
-        {
-          "uses": "actions/setup-node@v3",
-          "with": {
-            "node-version": 18
-          }
-        },
+				{
+					"uses": "actions/setup-node@v3",
+					"with": {
+						"node-version": 18
+					}
+				},
 				{
 					"run": "npm install"
 				},
@@ -54,12 +54,12 @@
 				{
 					"uses": "actions/checkout@v3"
 				},
-        {
-          "uses": "actions/setup-node@v3",
-          "with": {
-            "node-version": 18
-          }
-        },
+				{
+					"uses": "actions/setup-node@v3",
+					"with": {
+						"node-version": 18
+					}
+				},
 				{
 					"run": "npm install"
 				},
@@ -70,7 +70,7 @@
 		},
 		"enumerate": {
 			"runs-on": "ubuntu-latest",
-      "needs": ["lint", "build", "test"],
+			"needs": ["lint", "build", "test"],
 			"steps": [
 				{
 					"uses": "actions/checkout@v3",
@@ -80,9 +80,61 @@
 				},
 				{
 					"run": "echo TAG_NAME=[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec git diff HEAD^ --quiet \"{}\" \\; -exec echo \"{}\" \\; | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\", \\\"/g\")] >> $GITHUB_OUTPUT"
+				}
+			]
+		},
+		"release": {
+			"runs-on": "ubuntu-latest",
+			"needs": ["enumerate"],
+			"strategy": {
+				"matrix": {
+					"package": "${{ needs.*.outputs.TAG_NAME }}"
+				}
+			},
+			"steps": [
+				{
+					"uses": "softprops/action-gh-release@v1",
+					"env": {
+						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+					},
+					"with": {
+						"name": "Release v${{ needs.check_if_version_upgraded.outputs.to_version }}",
+						"tag_name": "v${{ needs.check_if_version_upgraded.outputs.to_version }}",
+						"target_commitish": "${{ github.head_ref || github.ref }}"
+					}
+				}
+			]
+		},
+		"publish": {
+			"runs-on": "ubuntu-latest",
+			"needs": ["release"],
+			"strategy": {
+				"matrix": {
+					"package": "${{  }}"
+				}
+			},
+			"steps": [
+				{
+					"uses": "actions/checkout@v3"
 				},
 				{
-					"run": "cat $GITHUB_OUTPUT"
+					"uses": "actions/setup-node@v3",
+					"with": {
+						"node-version": 18
+					}
+				},
+				{
+					"run": "npm install"
+				},
+				{
+					"run": "npm build"
+				},
+				{
+					"run": "npm publish",
+					"env": {
+						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}",
+						"VERSION": "${{ needs.check_if_version_upgraded.outputs.to_version }}"
+					}
 				}
 			]
 		}
