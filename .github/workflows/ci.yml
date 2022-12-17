@@ -89,7 +89,7 @@
 			"runs-on": "ubuntu-latest",
 			"needs": ["enumerate"],
 			"strategy": {
-				"matrix": "${{ fromJSON(needs.*.outputs.PACKAGES) }}"
+				"matrix": "${{ fromJSON(needs.enumerate.outputs.PACKAGES) }}"
 			},
 			"steps": [
 				{
