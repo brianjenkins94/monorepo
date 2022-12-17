@@ -85,7 +85,7 @@
 					"run": "npm install"
 				},
 				{
-					"run": "echo PACKAGES='[\"./apps/web/package.json\",\"./packages/ui/package.json\"]' >> $GITHUB_OUTPUT"
+					"run": "echo PACKAGES=\"[\\\"./apps/web/package.json\\\",\\\"./packages/ui/package.json\\\"]\" >> $GITHUB_OUTPUT"
 				}
 			]
 		},
@@ -94,7 +94,7 @@
 			"needs": ["changes"],
 			"strategy": {
 				"matrix": {
-					"packages": "${{ fromJSON(needs.changes.outputs.packages) }}"
+					"packages": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
 				}
 			},
 			"steps": [
@@ -116,7 +116,7 @@
 			"needs": ["changes", "release"],
 			"strategy": {
 				"matrix": {
-					"packages": "${{ fromJSON(needs.changes.outputs.packages) }}"
+					"packages": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
 				}
 			},
 			"steps": [
