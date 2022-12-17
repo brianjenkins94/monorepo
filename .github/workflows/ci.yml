@@ -94,7 +94,7 @@
 			"needs": ["changes"],
 			"strategy": {
 				"matrix": {
-					"packages": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
+					"packages": "${{ fromJSON(needs.changes.outputs.packages) }}"
 				}
 			},
 			"steps": [
@@ -116,7 +116,7 @@
 			"needs": ["changes", "release"],
 			"strategy": {
 				"matrix": {
-					"packages": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
+					"packages": "${{ fromJSON(needs.changes.outputs.packages) }}"
 				}
 			},
 			"steps": [
