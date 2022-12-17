@@ -79,7 +79,12 @@
 					}
 				},
 				{
-					"run": "echo TAG_NAME=[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec git diff HEAD^ --quiet \"{}\" \\; -exec echo \"{}\" \\; | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\", \\\"/g\")] >> $GITHUB_OUTPUT"
+					"name": "For each `package.json` that has changed since the previous commit...",
+					"run": "echo PACKAGES=[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec git diff HEAD^ --quiet \"{}\" \\; -exec echo \"{}\" \\; | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")] >> $GITHUB_OUTPUT"
+				},
+				{
+					"name": "That is not private...",
+					"run": "$GITHUB_OUTPUT"
 				}
 			]
 		},
@@ -88,7 +93,7 @@
 			"needs": ["enumerate"],
 			"strategy": {
 				"matrix": {
-					"package": "${{ needs.*.outputs.TAG_NAME }}"
+					"packages": "${{ needs.*.outputs.PACKAGES }}"
 				}
 			},
 			"steps": [
@@ -110,7 +115,7 @@
 			"needs": ["release"],
 			"strategy": {
 				"matrix": {
-					"package": "${{ needs.*.outputs.TAG_NAME }}"
+					"packages": "${{ needs.*.outputs.PACKAGES }}"
 				}
 			},
 			"steps": [
