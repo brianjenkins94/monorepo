@@ -111,7 +111,7 @@
 				},
 				{
 					"run": "echo ${{ fromJSON(needs.changes.outputs.packages) }}"
-				},
+				}
 			]
 		},
 		"publish": {
