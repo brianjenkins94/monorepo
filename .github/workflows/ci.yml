@@ -103,13 +103,13 @@
 					"run": "echo ${{ needs.changes.outputs.packages }}"
 				},
 				{
-					"run": "echo ${{ fromJSON(needs.changes.outputs) }}"
+					"run": "echo ${{ toJSON(needs.changes.outputs) }}"
 				},
 				{
-					"run": "echo ${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
+					"run": "echo ${{ toJSON(needs.changes.outputs.PACKAGES) }}"
 				},
 				{
-					"run": "echo ${{ fromJSON(needs.changes.outputs.packages) }}"
+					"run": "echo ${{ toJSON(needs.changes.outputs.packages) }}"
 				}
 			]
 		},
