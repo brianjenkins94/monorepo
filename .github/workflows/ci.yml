@@ -85,7 +85,7 @@
 			]
 		},
 		"release": {
-			"if": "${{ needs.*.outputs.PACKAGES != \"[]\" }}",
+			"if": "${{ needs.*.outputs.PACKAGES != '[]' }}",
 			"runs-on": "ubuntu-latest",
 			"needs": ["enumerate"],
 			"strategy": {
