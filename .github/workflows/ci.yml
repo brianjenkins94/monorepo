@@ -85,7 +85,7 @@
 					"run": "npm install"
 				},
 				{
-					"run": "echo PACKAGES=[\"./apps/web/package.json\",\"./packages/ui/package.json\"] >> $GITHUB_OUTPUT"
+					"run": "echo PACKAGES=\"[\\\"./apps/web/package.json\\\",\\\"./packages/ui/package.json\\\"]\" >> $GITHUB_OUTPUT"
 				}
 			]
 		},
