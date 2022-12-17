@@ -93,22 +93,25 @@
 			"runs-on": "ubuntu-latest",
 			"needs": ["changes"],
 			"strategy": {
-				"matrix": {
-					"packages": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
-				}
-			},
 			"steps": [
 				{
-					"uses": "softprops/action-gh-release@v1",
-					"env": {
-						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
-					},
-					"with": {
-						"name": "Release v${{ needs.check_if_version_upgraded.outputs.to_version }}",
-						"tag_name": "v${{ needs.check_if_version_upgraded.outputs.to_version }}",
-						"target_commitish": "${{ github.head_ref || github.ref }}"
-					}
-				}
+					"run": "echo ${{ needs.changes.outputs }}"
+				},
+				{
+					"run": "echo ${{ needs.changes.outputs.PACKAGES }}"
+				},
+				{
+					"run": "echo ${{ needs.changes.outputs.packages }}"
+				},
+				{
+					"run": "echo ${{ fromJSON(needs.changes.outputs) }}"
+				},
+				{
+					"run": "echo ${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
+				},
+				{
+					"run": "echo ${{ fromJSON(needs.changes.outputs.packages) }}"
+				},
 			]
 		},
 		"publish": {
