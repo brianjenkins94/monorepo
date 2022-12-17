@@ -68,28 +68,34 @@
 				}
 			]
 		},
-		"enumerate": {
+		"changes": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["lint", "build", "test"],
+			"needs": ["build", "lint", "test"],
 			"steps": [
 				{
-					"uses": "actions/checkout@v3",
+					"uses": "actions/checkout@v3"
+				},
+				{
+					"uses": "actions/setup-node@v3",
 					"with": {
-						"fetch-depth": 2
+						"node-version": 18
 					}
 				},
 				{
-					"name": "For each `package.json` that has changed since the previous commit...",
-					"run": "echo PACKAGES={\"packages\":[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec git diff HEAD^ --quiet \"{}\" \\; -exec echo \"{}\" \\; | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]} >> $GITHUB_OUTPUT"
+					"run": "npm install"
+				},
+				{
+					"run": "echo PACKAGES=[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")] >> $GITHUB_OUTPUT"
 				}
 			]
 		},
 		"release": {
-			"if": "${{ needs.*.outputs.PACKAGES != '[]' }}",
 			"runs-on": "ubuntu-latest",
-			"needs": ["enumerate"],
+			"needs": ["changes"],
 			"strategy": {
-				"matrix": "${{ fromJSON(needs.enumerate.outputs.PACKAGES) }}"
+				"matrix": {
+					"package": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
+				}
 			},
 			"steps": [
 				{
@@ -107,10 +113,10 @@
 		},
 		"publish": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["release"],
+			"needs": ["changes", "release"],
 			"strategy": {
 				"matrix": {
-					"packages": "${{ needs.*.outputs.PACKAGES }}"
+					"package": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
 				}
 			},
 			"steps": [
