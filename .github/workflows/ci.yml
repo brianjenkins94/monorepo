@@ -54,7 +54,7 @@
 			"needs": ["changes"],
 			"strategy": {
 				"matrix": {
-					"packages": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
+					"package": "${{ fromJSON(needs.changes.outputs.PACKAGES) }}"
 				}
 			},
 			"steps": [
