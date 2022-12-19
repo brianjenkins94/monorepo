@@ -83,12 +83,12 @@
 					"run": "npm install"
 				},
 				{
-					"id": "foo",
+					"id": "packages",
 					"run": "echo PACKAGES=\"[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]\" >> $GITHUB_OUTPUT"
 				}
 			],
 			"outputs": {
-				"packages": "${{ steps.foo.outputs.packages }}"
+				"packages": "${{ steps.packages.outputs.PACKAGES }}"
 			}
 		},
 		"release": {
