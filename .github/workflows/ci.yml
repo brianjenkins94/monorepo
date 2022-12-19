@@ -89,7 +89,9 @@
 					"run": "echo PACKAGES=\"[\\\"./apps/web/package.json\\\",\\\"./packages/ui/package.json\\\"]\" >> $GITHUB_OUTPUT"
 				}
 			],
-			"outputs": "${{ steps.foo.outputs }}"
+			"outputs": {
+				"packages": "${{ steps.foo.outputs.packages }}"
+			}
 		},
 		"release": {
 			"runs-on": "ubuntu-latest",
