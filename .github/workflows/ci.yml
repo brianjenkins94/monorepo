@@ -98,22 +98,7 @@
 			"needs": ["changes"],
 			"steps": [
 				{
-					"run": "echo ${{ needs.changes.outputs }}"
-				},
-				{
-					"run": "echo ${{ needs.changes.outputs.PACKAGES }}"
-				},
-				{
-					"run": "echo ${{ needs.changes.outputs.packages }}"
-				},
-				{
-					"run": "echo ${{ toJSON(needs.changes.outputs) }}"
-				},
-				{
 					"run": "echo ${{ toJSON(needs.changes.outputs.PACKAGES) }}"
-				},
-				{
-					"run": "echo ${{ toJSON(needs.changes.outputs.packages) }}"
 				}
 			]
 		},
