@@ -85,9 +85,13 @@
 					"run": "npm install"
 				},
 				{
+					"id": "foo",
 					"run": "echo PACKAGES=\"[\\\"./apps/web/package.json\\\",\\\"./packages/ui/package.json\\\"]\" >> $GITHUB_OUTPUT"
 				}
-			]
+			],
+			"outputs": {
+				"packages": "${{ steps.foo.outputs.PACKAGES }}"
+			}
 		},
 		"release": {
 			"runs-on": "ubuntu-latest",
