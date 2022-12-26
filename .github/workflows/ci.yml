@@ -23,6 +23,9 @@
 		"changes": {
 			"runs-on": "ubuntu-latest",
 			"needs": ["build"],
+			"permissions": {
+				"pull-requests": "read"
+			},
 			"steps": [
 				{
 					"uses": "dorny/paths-filter@v2",
