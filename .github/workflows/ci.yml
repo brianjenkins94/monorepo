@@ -23,10 +23,8 @@
 		"changes": {
 			"runs-on": "ubuntu-latest",
 			"needs": ["build"],
-			"permissions": {
-				"pull-requests": "read"
-			},
 			"steps": [
+				{ "uses": "actions/checkout@v3" },
 				{
 					"uses": "dorny/paths-filter@v2",
 					"id": "filter",
