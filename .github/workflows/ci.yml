@@ -28,7 +28,7 @@
 					"uses": "dorny/paths-filter@v2",
 					"id": "filter",
 					"with": {
-						"filters": ["apps/*", "packages/*"]
+						"filters": "{\"apps/web\":\"apps/web\"}"
 					}
 				}
 			],
