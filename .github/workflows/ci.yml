@@ -6,11 +6,11 @@
 		}
 	},
 	"jobs": {
-		"build": {
+		"npm run": {
 			"runs-on": "ubuntu-latest",
 			"strategy": {
-        "matrix": {
-          "script": ["build", "lint", "test"]
+				"matrix": {
+					"script": ["build", "lint", "test"]
 				},
 			},
 			"steps": [
@@ -22,21 +22,21 @@
 		},
 		"changes": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["build"],
+			"needs": ["npm run"],
 			"steps": [
-				{ "uses": "actions/checkout@v3" },
-				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{ "run": "npm install" },
 				{
-					"id": "packages",
-					"run": "echo PACKAGES=\"[$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]\" >> $GITHUB_OUTPUT"
+					"uses": "dorny/paths-filter@v2",
+					"id": "filter",
+					"with": {
+						"filters": ["apps/*", "packages/*"]
+					}
 				}
 			],
 			"outputs": {
 				"packages": "${{ steps.packages.outputs.PACKAGES }}"
 			}
 		},
-		"release": {
+		"turbo run release": {
 			"runs-on": "ubuntu-latest",
 			"needs": ["changes"],
 			"strategy": {
