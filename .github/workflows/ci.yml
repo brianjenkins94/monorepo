@@ -6,7 +6,7 @@
 		}
 	},
 	"jobs": {
-		"npm run": {
+		"build": {
 			"runs-on": "ubuntu-latest",
 			"strategy": {
 				"matrix": {
@@ -22,7 +22,7 @@
 		},
 		"changes": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["npm run"],
+			"needs": ["build"],
 			"steps": [
 				{
 					"uses": "dorny/paths-filter@v2",
@@ -36,7 +36,7 @@
 				"packages": "${{ steps.packages.outputs.PACKAGES }}"
 			}
 		},
-		"turbo run release": {
+		"release": {
 			"runs-on": "ubuntu-latest",
 			"needs": ["changes"],
 			"strategy": {
