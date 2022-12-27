@@ -27,7 +27,7 @@
 				{ "uses": "actions/checkout@v3" },
 				{
 					"id": "enumerate",
-					"run": "echo PACKAGES=\"{\"apps/web\":\"apps/web/**\"}\" >> $GITHUB_OUTPUT"
+					"run": "echo PACKAGES=\"{\\\"apps/web\\\":\\\"apps/web/**\\\"}\" >> $GITHUB_OUTPUT"
 				},
 				{
 					"uses": "dorny/paths-filter@v2",
