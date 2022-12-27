@@ -40,7 +40,7 @@
 			"strategy": {
 				"matrix": {
 					"script": ["build", "lint", "test"]
-				},
+				}
 			},
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
