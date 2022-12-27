@@ -51,7 +51,7 @@
 						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}",
 						"useLockFile": false
 					}
-				}
+				},
 				{ "run": "npm run ${{ matrix.script }}" }
 			]
 		},
