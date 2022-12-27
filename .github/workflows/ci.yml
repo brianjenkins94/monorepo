@@ -18,7 +18,7 @@
 				{
 					"uses": "bahmutov/npm-install@v1",
 					"with": {
-						"working-directory": "${{ join(fromJSON(steps.enumerate.outputs.packages), '\n') }}",
+						"working-directory": "${{ join(fromJSON(steps.enumerate.outputs.PACKAGES), '\n') }}",
 						"useLockFile": false
 					}
 				}
@@ -70,7 +70,7 @@
 			}
 		},
 		"release": {
-			"if": "${{ needs.changes.outputs.packages != '' && needs.changes.outputs.packages != '[]' }}",
+			"if": "needs.changes.outputs.packages != '' && needs.changes.outputs.packages != '[]'",
 			"runs-on": "ubuntu-latest",
 			"needs": ["enumerate", "changes"],
 			"strategy": {
