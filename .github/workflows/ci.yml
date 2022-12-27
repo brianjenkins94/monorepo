@@ -6,24 +6,41 @@
 		}
 	},
 	"jobs": {
-		"cache": {
+		"enumerate": {
 			"runs-on": "ubuntu-latest",
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
-				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{
 					"id": "enumerate",
 					"run": "echo PACKAGES=\"[$(find . -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]\" >> $GITHUB_OUTPUT"
 				},
+			],
+			"outputs": {
+				"packages": "${{ steps.enumerate.outputs.PACKAGES }}"
+			}
+		},
+		"install": {
+			"runs-on": "ubuntu-latest",
+			"needs": ["enumerate"],
+			"strategy": {
+				"matrix": {
+					"package": ["build", "lint", "test"]
+				},
+			},
+			"steps": [
+				{ "uses": "actions/checkout@v3" },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{
 					"uses": "bahmutov/npm-install@v1",
-					"with": "${{ steps.enumerate.outputs.PACKAGES }}"
+					"with": {
+						"working-directory": "${{ fromJSON(needs.enumerate.outputs.packages) }}"
+					}
 				}
 			]
 		},
 		"build": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["cache"],
+			"needs": ["install"],
 			"strategy": {
 				"matrix": {
 					"script": ["build", "lint", "test"]
