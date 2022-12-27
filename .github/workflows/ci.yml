@@ -33,7 +33,8 @@
 				{
 					"uses": "bahmutov/npm-install@v1",
 					"with": {
-						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}"
+						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}",
+						"useLockFile": false
 					}
 				}
 			]
@@ -49,7 +50,7 @@
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{ "uses": "bahmutov/npm-install@v1" },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{ "run": "npm run ${{ matrix.script }}" }
 			]
 		},
@@ -102,7 +103,8 @@
 				{
 					"uses": "bahmutov/npm-install@v1",
 					"with": {
-						"working-directory": "${{ needs.release.outputs.package }}"
+						"working-directory": "${{ needs.release.outputs.package }}",
+						"useLockFile": false
 					}
 				},
 				{ "run": "npm run build" },
