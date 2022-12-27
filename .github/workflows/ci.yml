@@ -34,11 +34,11 @@
 				}
 			],
 			"outputs": {
-				"packages": "${{ steps.packages.outputs.PACKAGES }}"
+				"packages": "${{ steps.filter.outputs.changes }}"
 			}
 		},
 		"release": {
-			"if": "${{ needs.changes.outputs.packages != '' }}",
+			"if": "${{ needs.changes.outputs.packages != '' && needs.changes.outputs.packages != '[]' }}",
 			"runs-on": "ubuntu-latest",
 			"needs": ["changes"],
 			"strategy": {
