@@ -13,30 +13,23 @@
 				{
 					"id": "enumerate",
 					"run": "echo PACKAGES=\"[$(find . -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} \\; | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]\" >> $GITHUB_OUTPUT"
+				},
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{
+					"uses": "bahmutov/npm-install@v1",
+					"with": {
+						"working-directory": "${{ join(fromJSON(steps.enumerate.outputs.packages), '\n') }}",
+						"useLockFile": false
+					}
 				}
 			],
 			"outputs": {
 				"packages": "${{ steps.enumerate.outputs.PACKAGES }}"
 			}
 		},
-		"install": {
+		"build-lint-test": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["enumerate"],
-			"steps": [
-				{ "uses": "actions/checkout@v3" },
-				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{
-					"uses": "bahmutov/npm-install@v1",
-					"with": {
-						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}",
-						"useLockFile": false
-					}
-				}
-			]
-		},
-		"build": {
-			"runs-on": "ubuntu-latest",
-			"needs": ["enumerate", "install"],
+			"needs": ["enumerate", "cache"],
 			"strategy": {
 				"matrix": {
 					"script": ["build", "lint", "test"]
@@ -57,7 +50,7 @@
 		},
 		"changes": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["build"],
+			"needs": ["build-lint-test"],
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{
