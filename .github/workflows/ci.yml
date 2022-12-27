@@ -22,11 +22,6 @@
 		"install": {
 			"runs-on": "ubuntu-latest",
 			"needs": ["enumerate"],
-			"strategy": {
-				"matrix": {
-					"package": ["build", "lint", "test"]
-				},
-			},
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
