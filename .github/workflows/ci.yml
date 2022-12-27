@@ -33,7 +33,7 @@
 				{
 					"uses": "bahmutov/npm-install@v1",
 					"with": {
-						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), \"\n\") }}"
+						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}"
 					}
 				}
 			]
