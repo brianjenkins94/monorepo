@@ -33,7 +33,7 @@
 					"uses": "dorny/paths-filter@v2",
 					"id": "filter",
 					"with": {
-						"filters": "${{ fromJSON(steps.enumerate.outputs.PACKAGES) }}"
+						"filters": "${{ steps.enumerate.outputs.PACKAGES }}"
 					}
 				}
 			],
