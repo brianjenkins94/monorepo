@@ -6,8 +6,24 @@
 		}
 	},
 	"jobs": {
+		"cache": {
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{ "uses": "actions/checkout@v3" },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{
+					"id": "enumerate",
+					"run": "echo PACKAGES=\"[$(find . -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]\" >> $GITHUB_OUTPUT"
+				},
+				{
+					"uses": "bahmutov/npm-install@1",
+					"with": "${{ steps.enumerate.outputs.PACKAGES }}"
+				}
+			]
+		},
 		"build": {
 			"runs-on": "ubuntu-latest",
+			"needs": ["cache"],
 			"strategy": {
 				"matrix": {
 					"script": ["build", "lint", "test"]
@@ -16,7 +32,7 @@
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{ "run": "npm install" },
+				{ "uses": "bahmutov/npm-install@1" },
 				{ "run": "npm run ${{ matrix.script }}" }
 			]
 		},
@@ -54,19 +70,31 @@
 				{
 					"run": "echo ${{ matrix.package }}"
 				}
-			]
+			],
+			"outputs": {
+				"package": "${{ matrix.package }}"
+			}
 		},
 		"publish": {
-			"if": "${{ needs.changes.outputs.packages != '' && needs.changes.outputs.packages != '[]' }}",
+			"if": false,
 			"runs-on": "ubuntu-latest",
 			"needs": ["release"],
-			"strategy": {
-				"matrix": {
-					"package": "${{ fromJSON(needs.changes.outputs.packages) }}"
-				}
-			},
 			"steps": [
-				{ "run": "echo ${{ matrix.package }}" }
+				{ "uses": "actions/checkout@v3" },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{
+					"uses": "bahmutov/npm-install@1",
+					"with": {
+						"working-directory": "${{ needs.release.outputs.package }}"
+					}
+				},
+				{ "run": "npm run build" },
+				{
+					"env": {
+						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
+					},
+					"run": "npx turbo run publish"
+				}
 			]
 		}
 	}
