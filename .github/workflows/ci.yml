@@ -13,7 +13,7 @@
 				{
 					"id": "enumerate",
 					"run": "echo PACKAGES=\"[$(find . -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} \\; | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]\" >> $GITHUB_OUTPUT"
-				},
+				}
 			],
 			"outputs": {
 				"packages": "${{ steps.enumerate.outputs.PACKAGES }}"
