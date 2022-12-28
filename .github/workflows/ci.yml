@@ -55,7 +55,7 @@
 				{ "uses": "actions/checkout@v3" },
 				{
 					"id": "enumerate",
-					"run": "echo PACKAGES=\"{find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname \"{}\" \\; | sed -z \"s/\\.\\/\\(.*\\)/\\\"\1\\\":\\\"\\1\\/\\*\\*\\\"/gm;s/\\n/,/g\"}\" >> $GITHUB_OUTPUT"
+					"run": "echo PACKAGES=\"{find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname \"{}\" \\; | sed -z \"s/\\.\\/\\(.*\\)/\\\"\\1\\\":\\\"\\1\\/\\*\\*\\\"/gm;s/\\n/,/g\"}\" >> $GITHUB_OUTPUT"
 				},
 				{
 					"uses": "dorny/paths-filter@v2",
