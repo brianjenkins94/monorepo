@@ -58,6 +58,7 @@
 					"run": "echo PACKAGES=\"{$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname \"{}\" \\; | sed -z \"s/\\.\\/\\(.*\\)/\\\"\\1\\\":\\\"\\1\\/\\*\\*\\\"/gm\\;s/\\n/,/g\")}\" >> $GITHUB_OUTPUT"
 				},
 				{
+					"if": "steps.enumerate.outputs.PACKAGES != '{}'",
 					"uses": "dorny/paths-filter@v2",
 					"id": "filter",
 					"with": {
