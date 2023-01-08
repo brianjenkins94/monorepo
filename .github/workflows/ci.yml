@@ -6,30 +6,8 @@
 		}
 	},
 	"jobs": {
-		"enumerate": {
-			"runs-on": "ubuntu-latest",
-			"steps": [
-				{ "uses": "actions/checkout@v3" },
-				{
-					"id": "enumerate",
-					"run": "echo PACKAGES=\"[$(find . -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname \"{}\" \\; | sed -z \"s/^/\\\"/;s/\\n$/\\\"/;s/\\n/\\\",\\\"/g\")]\" >> $GITHUB_OUTPUT"
-				},
-				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{
-					"uses": "bahmutov/npm-install@v1",
-					"with": {
-						"working-directory": "${{ join(fromJSON(steps.enumerate.outputs.PACKAGES), '\n') }}",
-						"useLockFile": false
-					}
-				}
-			],
-			"outputs": {
-				"packages": "${{ steps.enumerate.outputs.PACKAGES }}"
-			}
-		},
 		"build-lint-test": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["enumerate"],
 			"strategy": {
 				"matrix": {
 					"script": ["build", "lint", "test"]
@@ -38,13 +16,7 @@
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{
-					"uses": "bahmutov/npm-install@v1",
-					"with": {
-						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}",
-						"useLockFile": false
-					}
-				},
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{ "run": "npm run ${{ matrix.script }}" }
 			]
 		},
@@ -73,7 +45,7 @@
 		"release": {
 			"if": "needs.changes.outputs.packages != '' && needs.changes.outputs.packages != '[]'",
 			"runs-on": "ubuntu-latest",
-			"needs": ["enumerate", "changes"],
+			"needs": ["changes"],
 			"strategy": {
 				"matrix": {
 					"package": "${{ fromJSON(needs.changes.outputs.packages) }}"
@@ -85,15 +57,17 @@
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{
-					"uses": "bahmutov/npm-install@v1",
+					"uses": "softprops/action-gh-release@v1",
 					"with": {
-						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}",
-						"useLockFile": false
+						"name": "Release v1",
+						"tag_name": "v1",
+						"prerelease": true
+					},
+					"env": {
+						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
 					}
-				},
-				{
-					"run": "echo ${{ matrix.package }}"
 				}
 			],
 			"outputs": {
@@ -102,20 +76,14 @@
 		},
 		"publish": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["enumerate", "release"],
+			"needs": ["release"],
 			"env": {
 				"NODE_ENV": "production"
 			},
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{
-					"uses": "bahmutov/npm-install@v1",
-					"with": {
-						"working-directory": "${{ join(fromJSON(needs.enumerate.outputs.packages), '\n') }}",
-						"useLockFile": false
-					}
-				},
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{ "run": "npm run build" },
 				{
 					"env": {
