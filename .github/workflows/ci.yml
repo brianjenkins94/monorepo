@@ -58,7 +58,7 @@
 				{
 					"id": "version",
 					"working-directory": "${{ matrix.package }}",
-					"run": "echo VERSION=$(npm pkg get version) >> $GITHUB_OUTPUT"
+					"run": "echo VERSION=$(npm pkg get version --workspaces=false) >> $GITHUB_OUTPUT"
 				},
 				{
 					"uses": "softprops/action-gh-release@v1",
