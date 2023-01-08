@@ -56,14 +56,14 @@
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{
-					"id": "version",
+					"id": "tag",
 					"working-directory": "${{ matrix.package }}",
-					"run": "echo VERSION=$(npm pkg get version --workspaces=false) >> $GITHUB_OUTPUT"
+					"run": "echo TAG=$(jq --raw-output '\"\\(.name)-\\(.version)\"' package.json) >> $GITHUB_OUTPUT"
 				},
 				{
 					"uses": "softprops/action-gh-release@v1",
 					"with": {
-						"tag_name": "${{ matrix.package }}-${{ steps.version.outputs.VERSION }}",
+						"tag_name": "${{ steps.version.outputs.TAG }}",
 						"prerelease": true
 					},
 					"env": {

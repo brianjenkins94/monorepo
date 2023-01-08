@@ -32,6 +32,12 @@
 			}
 		}
 	},
+	"features": {
+		"node": {
+			"version": "lts",
+			"nodeGypDependencies": false
+		}
+	},
 	"forwardPorts": [5000, 8080],
 	"postCreateCommand": "npm install",
 	"runArgs": ["--network=host"]
