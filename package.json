@@ -15,6 +15,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
+    "ls": "node --eval \"console.log(JSON.stringify(Object.fromEntries(process.argv.slice(1).map(function(element) { element = element.substring(2); return [element, element + \\\"/**\\\"]; }))));\" -- $(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} +)",
     "test": "turbo run test"
   },
   "devDependencies": {
