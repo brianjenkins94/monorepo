@@ -59,8 +59,7 @@
 					"uses": "softprops/action-gh-release@v1",
 					"with": {
 						"name": "Release v1",
-						"tag_name": "v1",
-						"prerelease": true
+						"tag_name": "v1"
 					},
 					"env": {
 						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
@@ -84,7 +83,7 @@
 						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
 					},
 					"working-directory": "${{ needs.release.outputs.package }}",
-					"run": "npm run publish"
+					"run": "# npm run publish"
 				}
 			]
 		}
