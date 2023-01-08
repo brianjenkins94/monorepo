@@ -57,6 +57,7 @@
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{
 					"id": "version",
+					"working-directory": "${{ matrix.package }}",
 					"run": "echo VERSION=$(npm pkg get version) >> $GITHUB_OUTPUT"
 				},
 				{
