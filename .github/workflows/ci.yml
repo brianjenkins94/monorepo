@@ -62,7 +62,7 @@
 				{
 					"uses": "softprops/action-gh-release@v1",
 					"with": {
-						"tag_name": "{{ matrix.package }}-{{ steps.version.outputs.VERSION }}",
+						"tag_name": "${{ matrix.package }}-${{ steps.version.outputs.VERSION }}",
 						"prerelease": true
 					},
 					"env": {
