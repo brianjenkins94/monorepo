@@ -27,7 +27,7 @@
 				{ "uses": "actions/checkout@v3" },
 				{
 					"id": "enumerate",
-					"run": "echo PACKAGES=\"$(npm run ls --silent)\" >> $GITHUB_OUTPUT"
+					"run": "echo PACKAGES=\"$(npm run changes --silent)\" >> $GITHUB_OUTPUT"
 				},
 				{
 					"if": "steps.enumerate.outputs.PACKAGES != '{}'",
@@ -56,10 +56,13 @@
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{
+					"id": "version",
+					"run": "echo VERSION=$(npm pkg get version) >> $GITHUB_OUTPUT"
+				},
+				{
 					"uses": "softprops/action-gh-release@v1",
 					"with": {
-						"name": "Release v1",
-						"tag_name": "v1"
+						"tag_name": "{{ matrix.package }}-{{ steps.version.outputs.VERSION }}"
 					},
 					"env": {
 						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
