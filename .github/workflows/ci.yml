@@ -27,7 +27,7 @@
 				{ "uses": "actions/checkout@v3" },
 				{
 					"id": "enumerate",
-					"run": "echo PACKAGES=\"$(npm run changes --silent)\" >> $GITHUB_OUTPUT"
+					"run": "echo PACKAGES=\"$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} + | jq --compact-output --null-input --raw-input --slurp 'input | split(\"\n\")[:-1] | reduce .[][2:] as $key ({}; .[$key] = \"\($key)/**\"))" >> $GITHUB_OUTPUT"
 				},
 				{
 					"if": "steps.enumerate.outputs.PACKAGES != '{}'",
@@ -58,12 +58,12 @@
 				{
 					"id": "tag",
 					"working-directory": "${{ matrix.package }}",
-					"run": "echo TAG=$(jq --raw-output '\"\\(.name)-\\(.version)\"' package.json) >> $GITHUB_OUTPUT"
+					"run": "echo TAG_NAME=$(jq --raw-output '\"\\(.name)-\\(.version)\"' package.json) >> $GITHUB_OUTPUT"
 				},
 				{
 					"uses": "softprops/action-gh-release@v1",
 					"with": {
-						"tag_name": "${{ steps.tag.outputs.TAG }}",
+						"tag_name": "${{ steps.tag.outputs.TAG_NAME }}",
 						"prerelease": true
 					},
 					"env": {

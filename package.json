@@ -13,7 +13,6 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "changes": "node scripts/changes.js $(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} +)",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "test": "turbo run test"
