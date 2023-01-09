@@ -27,7 +27,7 @@
 				{ "uses": "actions/checkout@v3" },
 				{
 					"id": "enumerate",
-					"run": "echo PACKAGES=\"$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} + | jq --compact-output --null-input --raw-input --slurp 'input | split(\"\\n\")[:-1] | reduce .[][2:] as $key ({}; .[$key] = \"\($key)/**\"))\" >> $GITHUB_OUTPUT"
+					"run": "echo PACKAGES=\"$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} + | jq --compact-output --null-input --raw-input --slurp 'input | split(\\\"\\n\\\")[:-1] | reduce .[][2:] as $key ({}; .[$key] = \\\"\($key)/**\\\"))\" >> $GITHUB_OUTPUT"
 				},
 				{
 					"if": "steps.enumerate.outputs.PACKAGES != '{}'",
