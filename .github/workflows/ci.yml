@@ -74,23 +74,6 @@
 			"outputs": {
 				"package": "${{ matrix.package }}"
 			}
-		},
-		"publish": {
-			"runs-on": "ubuntu-latest",
-			"needs": ["release"],
-			"steps": [
-				{ "uses": "actions/checkout@v3" },
-				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
-				{ "run": "npm run build" },
-				{
-					"env": {
-						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
-					},
-					"working-directory": "${{ needs.release.outputs.package }}",
-					"run": "# npm run publish"
-				}
-			]
 		}
 	}
 }
