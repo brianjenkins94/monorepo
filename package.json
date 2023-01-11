@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "bin": "scripts/npx.js",
+  "bin": "scripts/npx.mjs",
   "scripts": {
     "workspaceify": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*' && rm -rf package-lock.json && npm install"
   },
