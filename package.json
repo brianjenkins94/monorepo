@@ -1,7 +1,6 @@
 {
   "name": "monorepo",
   "version": "0.0.0",
-  "private": true,
   "bin": {
     "monorepo": "test.mjs"
   },
