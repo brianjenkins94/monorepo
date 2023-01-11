@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "bin": {
-    "monorepo": "index.js"
+    "monorepo": "index.js",
+    "foo": "index.js"
   },
   "scripts": {
     "dev": "turbo run dev --parallel"
