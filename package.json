@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "bin": "index",
+  "bin": {
+    "monorepo": "index.js"
+  },
   "scripts": {
     "dev": "turbo run dev --parallel"
   }
