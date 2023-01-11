@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "bin": "./test.cjs",
+  "bin": {
+    "monorepo": "test.js"
+  },
   "scripts": {
     "dev": "turbo run dev --parallel"
   },
