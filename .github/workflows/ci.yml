@@ -18,7 +18,7 @@
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{ "run": "npm run workspaceify" },
-				{ "run": "npm run ${{ matrix.script }}" }
+				{ "run": "npx turbo run ${{ matrix.script }}" }
 			]
 		},
 		"changes": {
