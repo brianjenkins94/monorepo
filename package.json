@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "bin": "./scripts/test.js",
+  "bin": "test",
   "scripts": {
     "dev": "turbo run dev --parallel"
   },
