@@ -14,5 +14,9 @@
     "@typescript-eslint/parser": "latest",
     "eslint": "^7.32.0",
     "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   }
 }
