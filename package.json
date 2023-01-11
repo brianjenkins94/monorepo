@@ -1,9 +1,10 @@
 {
   "name": "monorepo",
   "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "bin": "index",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "scripts": {
+    "dev": "turbo run dev --parallel"
+  }
 }
