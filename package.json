@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "bin": "index.js",
+  "bin": "scripts/npx.js",
   "scripts": {
-    "dev": "turbo run dev --parallel"
+    "dev": "turbo run dev --parallel",
+    "postinstall": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "latest",
