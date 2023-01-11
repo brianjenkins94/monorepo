@@ -6,7 +6,9 @@
   "bin": "scripts/npx.js",
   "scripts": {
     "dev": "turbo run dev --parallel",
-    "postinstall": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'"
+    "prebuild": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'",
+    "prelint": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'",
+    "pretest": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "latest",
