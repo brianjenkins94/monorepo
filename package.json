@@ -1,8 +1,6 @@
 {
   "name": "monorepo",
   "version": "0.0.0",
-  "private": true,
-  "type": "module",
   "bin": "index.js",
   "scripts": {
     "dev": "turbo run dev --parallel"
