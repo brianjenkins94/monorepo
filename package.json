@@ -5,10 +5,11 @@
   "type": "module",
   "bin": "scripts/npx.js",
   "scripts": {
-    "dev": "turbo run dev --parallel",
-    "prebuild": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'",
-    "prelint": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'",
-    "pretest": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'"
+    "build": "npm run workspaceify && turbo run build",
+    "dev": "npm run workspaceify && turbo run dev --parallel",
+    "lint": "npm run workspaceify && turbo run lint",
+    "test": "npm run workspaceify && turbo run test",
+    "workspaceify": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "latest",
