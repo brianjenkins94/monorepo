@@ -5,10 +5,6 @@
   "type": "module",
   "bin": "scripts/npx.js",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
     "workspaceify": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*'"
   },
   "devDependencies": {
