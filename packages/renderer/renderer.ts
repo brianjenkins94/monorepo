@@ -1,4 +1,4 @@
-import { getKeyOfObjectByPath } from "util";
+import { getKeyOfObjectByPath } from "object-utils";
 
 function interpolateArray() {
 
