@@ -14,7 +14,7 @@
   "bin": "scripts/npx.mjs",
   "scripts": {
     "dev": "turbo run dev --parallel",
-    "purge": "find . \\( -name \"node_modules\" -or -name \".next\" -or -name \"out\" -or -name \"package-lock.json\" \\) -prune -exec rm -rf \"{}\" \\;",
+    "purge": "find . \\( -name \"node_modules\" -or -name \".next\" -or -name \".turbo\" -or -name \"dist\" -or -name \"out\" -or -name \"package-lock.json\" \\) -prune -exec rm -rf \"{}\" \\;",
     "test": "rm -rf \"$(npm config get cache)/_npx/*\" && npx brianjenkins94/kerplow ; rm -rf \"$(npm config get cache)/_npx/*\"",
     "update": "node scripts/update.mjs",
     "workspaceify": "npm pkg set workspaces[0]='.' workspaces[1]='apps/*' workspaces[2]='packages/*' && npm run purge"
