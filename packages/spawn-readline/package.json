@@ -1,21 +1,19 @@
 {
-  "name": "fido",
+  "name": "spawn-readline",
   "version": "0.1.0",
-  "description": "The goodest of fetch wrappers.",
+  "description": "",
   "author": "Brian Jenkins",
   "license": "MIT",
-  "main": "fido.ts",
-  "types": "fido.ts",
+  "main": "spawnReadline.ts",
+  "types": "spawnReadline.ts",
   "type": "module",
   "scripts": {
     "dev": "npm run build --watch",
-    "build": "tsup fido.ts --format esm --dts",
+    "build": "tsup spawnReadline.ts --format esm --dts",
     "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm test.ts"
   },
-  "dependencies": {
-    "bottleneck": "latest"
-  },
   "devDependencies": {
+    "@types/node": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "^7.32.0",
@@ -23,17 +21,14 @@
     "tsup": "latest",
     "typescript": "latest"
   },
-  "optionalDependencies": {
-    "saxes": "latest"
-  },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
   },
   "exports": {
     ".": {
-      "import": "./dist/fido.js",
-      "types": "./dist/fido.d.ts"
+      "import": "./dist/spawnReadline.js",
+      "types": "./dist/spawnReadline.d.ts"
     }
   },
   "files": [
