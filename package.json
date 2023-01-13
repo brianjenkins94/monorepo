@@ -13,7 +13,6 @@
   "type": "module",
   "bin": "scripts/npx.mjs",
   "scripts": {
-    "postinstall": "echo $0",
     "purge": "find . \\( -name \"node_modules\" -or -name \".next\" -or -name \"out\" -or -name \"package-lock.json\" \\) -prune -exec rm -rf \"{}\" \\;",
     "test": "rm -rf \"$(npm config get cache)/_npx/*\" && npx brianjenkins94/kerplow ; rm -rf \"$(npm config get cache)/_npx/*\"",
     "update": "node scripts/update.mjs",
