@@ -10,11 +10,10 @@
     "url": "https://github.com/brianjenkins94/monorepo/issues"
   },
   "homepage": "https://github.com/brianjenkins94/monorepo#readme",
-  "private": true,
   "type": "module",
   "bin": "scripts/npx.mjs",
   "scripts": {
-    "purge": "find . -not -path \"**/node_modules/*\" \\( -name \"node_modules\" -or -name \".next\" -or -name \"out\" -or -name \"package-lock.json\" \\) -exec rm -rf \"{}\" \\;",
+    "purge": "find . -not -path \"**/node_modules/*\" \\( -name \"node_modules\" -or -name \".next\" -or -name \"out\" -or -name \"package-lock.json\" \\) -prune -exec rm -rf \"{}\" \\;",
     "workspaceify": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*' && rm package-lock.json && npm install"
   },
   "devDependencies": {

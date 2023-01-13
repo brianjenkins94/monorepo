@@ -158,7 +158,7 @@ function findRepositoryTextFiles(cwd = baseDirectory) {
 }
 
 function retab(file) {
-	fs.readFile(file, "utf8", function(error, data: any) {
+	fs.readFile(file, "utf8", function(error, data) {
 		// Convert leading, trim trailing
 		data = data.replace(/^\t+/gmu, function(match) {
 			return " ".repeat(match.length * 4);

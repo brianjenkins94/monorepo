@@ -8,7 +8,7 @@
   "types": "fido.ts",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm example.ts"
+    "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm test.ts"
   },
   "dependencies": {
     "bottleneck": "latest"
