@@ -13,13 +13,17 @@
   "type": "module",
   "bin": "scripts/npx.mjs",
   "scripts": {
+    "prepare": "turbo run build",
     "purge": "find . \\( -name \"node_modules\" -or -name \".next\" -or -name \"out\" -or -name \"package-lock.json\" \\) -prune -exec rm -rf \"{}\" \\;",
-    "workspaceify": "npm pkg set workspaces[]='apps/*' workspaces[]='packages/*' && rm package-lock.json && npm install"
+    "test": "rm -rf \"$(npm config get cache)/_npx/*\" && npx brianjenkins94/kerplow ; rm -rf \"$(npm config get cache)/_npx/*\"",
+    "update": "node scripts/update.mjs",
+    "workspaceify": "npm pkg set workspaces[]='.' workspaces[]='apps/*' workspaces[]='packages/*' && rm package-lock.json && npm install"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "^7.32.0",
+    "tsup": "latest",
     "turbo": "latest",
     "typescript": "latest"
   },
