@@ -1,16 +1,16 @@
 {
-  "name": "util",
+  "name": "utilities",
   "version": "0.1.0",
   "description": "",
   "author": "Brian Jenkins",
   "license": "MIT",
-  "main": "util.ts",
-  "types": "util.ts",
+  "main": "utilities.ts",
+  "types": "utilities.ts",
   "type": "module",
   "scripts": {
     "dev": "npm run build --watch",
-    "build": "tsup util.ts --format esm --dts",
-    "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm util.ts"
+    "build": "tsup utilities.ts --format esm --dts",
+    "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm utilities.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "latest",
@@ -26,8 +26,8 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/util.js",
-      "types": "./dist/util.d.ts"
+      "import": "./dist/utilities.js",
+      "types": "./dist/utilities.d.ts"
     }
   },
   "files": [
