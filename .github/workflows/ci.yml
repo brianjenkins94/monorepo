@@ -31,7 +31,7 @@
 		},
 		"push": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["build-lint-test"],c
+			"needs": ["build-lint-test"],
 			"steps": [
 				{ "uses": "actions/checkout@v3", "with": { "ref": "main" } },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
