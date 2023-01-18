@@ -46,5 +46,6 @@
     "turndown": "latest",
     "turndown-plugin-gfm": "npm:joplin-turndown-plugin-gfm@latest",
     "typescript": "latest"
-  }
+  },
+  "sideEffects": false
 }
