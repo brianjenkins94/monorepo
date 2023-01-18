@@ -29,23 +29,21 @@
 				{ "run": "npx turbo run ${{ matrix.script }}" }
 			]
 		},
-		{
-			"push": {
-				"runs-on": "ubuntu-latest",
-				"needs": ["build-lint-test"],c
-				"steps": [
-					{ "uses": "actions/checkout@v3", "with": { "ref": "main" } },
-					{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-					{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
-					{ "run": "npx turbo run build" },
-					{ "run": "git add --force **/dist" },
-					{ "run": "npm pkg delete workspaces" },
-					{ "run": "git commit --author \"GitHub Actions <>\" --branch dist --message \"\"" },
-					{ "run": "git checkout dist" },
-					{ "run": "git merge main" },
-					{ "run": "git push" }
-				]
-			}
+		"push": {
+			"runs-on": "ubuntu-latest",
+			"needs": ["build-lint-test"],c
+			"steps": [
+				{ "uses": "actions/checkout@v3", "with": { "ref": "main" } },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
+				{ "run": "npx turbo run build" },
+				{ "run": "git add --force **/dist" },
+				{ "run": "npm pkg delete workspaces" },
+				{ "run": "git commit --author \"GitHub Actions <>\" --branch dist --message \"\"" },
+				{ "run": "git checkout dist" },
+				{ "run": "git merge main" },
+				{ "run": "git push" }
+			]
 		},
 		"changes": {
 			"runs-on": "ubuntu-latest",
