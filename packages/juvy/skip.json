@@ -1,0 +1,42 @@
+{
+  "name": "juvy",
+  "version": "0.1.0",
+  "description": "A not quite drop-in replacement for mozilla/node-convict.",
+  "author": "Lloyd Hilaiel",
+  "contributors": [
+    {
+      "name": "Brian Jenkins"
+    }
+  ],
+  "license": "Apache-2.0",
+  "main": "juvy.ts",
+  "types": "juvy.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build --watch",
+    "build": "tsup juvy.ts --format esm --dts",
+    "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "^7.32.0",
+    "ts-node": "latest",
+    "tsup": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/juvy.js",
+      "types": "./dist/juvy.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ]
+}
