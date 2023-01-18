@@ -39,7 +39,7 @@
 				{ "run": "npx turbo run build" },
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
-				{ "run": "git commit --all --allow-empty-message --author \"github-actions-bot <support+actions@github.com>\"" },
+				{ "run": "git commit --all --allow-empty-message --author=\"github-actions-bot <support+actions@github.com>\"" },
 				{ "run": "git checkout dist" },
 				{ "run": "git merge main" },
 				{ "run": "git push" }
