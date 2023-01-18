@@ -77,7 +77,7 @@ export async function routeify(routesDirectory) {
 				if ((await fs.stat(file)).isDirectory()) {
 					nextQueue[file] = await fs.readdir(file);
 				} else {
-					if (file.endsWith("_middleware.ts")) {
+					if (file === "_middleware.ts") {
 						throw new Error("Not yet implemented.");
 					}
 
