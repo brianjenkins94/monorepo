@@ -40,7 +40,7 @@
 				{ "run": "git add --force **/dist/*" },
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
-				{ "run": "git commit --author \"GitHub Actions <>\" --branch dist --message \"\"" },
+				{ "run": "git commit --author \"GitHub Actions <>\" --message \"\"" },
 				{ "run": "git checkout dist" },
 				{ "run": "git merge main" },
 				{ "run": "git push" }
