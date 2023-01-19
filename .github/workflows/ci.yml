@@ -44,10 +44,10 @@
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 				{ "run": "git rm -r --cached ." },
 
-				{ "run": "git commit --all --message \"Deploy" },
+				{ "run": "git commit --all --message \"Deploy\"" },
 
 				{ "run": "git fetch origin main" },
-				{ "run": "git merge main" },
+				{ "run": "git merge main --no-rebase" },
 				{ "run": "git push origin dev:main" }
 			]
 		}
