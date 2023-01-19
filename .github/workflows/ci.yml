@@ -22,6 +22,8 @@
 
 				{ "run": "git commit --all --message \"Deploy\"" },
 
+				{ "run": "git fetch origin main" },
+
 				{ "run": "git push origin dev:main" }
 			]
 		}
