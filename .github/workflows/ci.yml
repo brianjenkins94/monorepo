@@ -25,7 +25,9 @@
 				{
 					"uses": "peter-evans/create-pull-request@v4",
           "with": {
-						"branch": "origin/main"
+						"title": "Automated build"
+						"branch": "main"
+						"commit-message": "Updated build artifacts"
           }
 				}
 			]
