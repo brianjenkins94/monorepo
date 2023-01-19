@@ -1,0 +1,35 @@
+{
+  "name": "monorepo",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianjenkins94/monorepo.git"
+  },
+  "author": "Brian Jenkins",
+  "bugs": {
+    "url": "https://github.com/brianjenkins94/monorepo/issues"
+  },
+  "homepage": "https://github.com/brianjenkins94/monorepo#readme",
+  "type": "module",
+  "bin": "scripts/npx.mjs",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "purge": "find . \\( -name \"node_modules\" -or -name \".next\" -or -name \".turbo\" -or -name \"dist\" -or -name \"out\" -or -name \"package-lock.json\" \\) -prune -exec rm -rf \"{}\" \\;",
+    "reexport": "node scripts/reexport.mjs",
+    "test": "rm -rf \"$(npm config get cache)/_npx/*\" && npx brianjenkins94/kerplow ; rm -rf \"$(npm config get cache)/_npx/*\"",
+    "update": "node scripts/update.mjs"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "^7.32.0",
+    "tsup": "latest",
+    "turbo": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "packageManager": "npm@8.5.5"
+}

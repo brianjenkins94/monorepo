@@ -1,0 +1,44 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.238.0/containers/typescript-node
+{
+	"image": "mcr.microsoft.com/playwright:latest",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"streetsidesoftware.code-spell-checker",
+				"unifiedjs.vscode-mdx"
+			],
+			"settings": {
+				"[javascript]": {
+					"editor.formatOnSave": true
+				},
+				"[javascriptreact]": {
+					"editor.formatOnSave": true
+				},
+				"[typescript]": {
+					"editor.formatOnSave": true
+				},
+				"[typescriptreact]": {
+					"editor.formatOnSave": true
+				},
+				"editor.formatOnSave": false,
+				"files.insertFinalNewline": true,
+				"files.trimTrailingWhitespace": true,
+				"javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+				"javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+				"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+				"typescript.format.insertSpaceBeforeFunctionParenthesis": false
+			}
+		}
+	},
+	"features": {
+		"node": {
+			"version": "lts",
+			"nodeGypDependencies": false
+		}
+	},
+	"forwardPorts": [5000, 8080],
+	"postCreateCommand": "npm install",
+	"runArgs": ["--network=host"]
+}

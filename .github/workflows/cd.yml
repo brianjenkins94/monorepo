@@ -1,0 +1,89 @@
+{
+	"name": "cd",
+	"on": {
+		"pull_request": {
+			"branches": ["main"]
+		}
+	},
+	"jobs": {
+		"cache": {
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } }
+			]
+		},
+		"changes": {
+			"runs-on": "ubuntu-latest",
+			"needs": ["cache"],
+			"steps": [
+				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
+				{
+					"id": "enumerate",
+					"run": "echo PACKAGES=\"$(find . -mindepth 2 -name \"package.json\" -not -path \"*/.*\" -not -path \"*/node_modules/**\" -exec dirname {} + | jq --compact-output --null-input --raw-input --slurp 'input | split(\"\\n\")[:-1] | reduce .[][2:] as $key ({}; .[$key] = \"\\($key)/**\")')\" >> $GITHUB_OUTPUT"
+				},
+				{
+					"if": "steps.enumerate.outputs.PACKAGES != '{}'",
+					"uses": "dorny/paths-filter@v2",
+					"id": "filter",
+					"with": {
+						"filters": "${{ steps.enumerate.outputs.PACKAGES }}"
+					}
+				}
+			],
+			"outputs": {
+				"packages": "${{ steps.filter.outputs.changes }}"
+			}
+		},
+		"release": {
+			"if": "needs.changes.outputs.packages != '' && needs.changes.outputs.packages != '[]'",
+			"runs-on": "ubuntu-latest",
+			"needs": ["changes"],
+			"strategy": {
+				"matrix": {
+					"package": "${{ fromJSON(needs.changes.outputs.packages) }}"
+				}
+			},
+			"steps": [
+				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
+				{
+					"id": "tag",
+					"working-directory": "${{ matrix.package }}",
+					"run": "echo TAG_NAME=$(jq --raw-output '\"\\(.name)-\\(.version)\"' package.json) >> $GITHUB_OUTPUT"
+				},
+				{
+					"uses": "softprops/action-gh-release@v1",
+					"with": {
+						"draft": true,
+						"tag_name": "${{ steps.tag.outputs.TAG_NAME }}"
+					},
+					"env": {
+						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
+					}
+				}
+			],
+			"outputs": {
+				"package": "${{ matrix.package }}"
+			}
+		},
+		"publish": {
+			"needs": ["release"],
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{ "uses": "actions/checkout@v3" },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
+				{ "run": "npm run build" },
+				{
+					"env": {
+						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
+					},
+					"run": "echo ${{ github.ref_name }}"
+				}
+			]
+		}
+	}
+}
