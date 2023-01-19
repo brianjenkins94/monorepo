@@ -24,6 +24,8 @@
 
 				{ "run": "git pull origin dev:main" },
 
+				{ "run": "git status" }
+
 				{ "run": "git push origin main" }
 			]
 		}
