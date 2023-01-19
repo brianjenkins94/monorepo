@@ -22,7 +22,9 @@
 
 				{ "run": "git commit --all --message \"Deploy\"" },
 
-				{ "run": "git pull origin dev:main" }
+				{ "run": "git pull origin dev:main" },
+
+				{ "run": "git push origin main" }
 			]
 		}
 	}
