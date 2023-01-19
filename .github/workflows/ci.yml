@@ -42,6 +42,8 @@
 				{ "run": "git config user.name \"GitHub Actions\" && git config user.email \"actions@users.noreply.github.com\"" },
 				{ "run": "git commit --all --allow-empty-message --message \"\"" },
 				{ "run": "git fetch origin main" },
+				{ "run": "git pull" },
+				{ "run": "git merge main" },
 				{ "run": "git push origin dev:main" }
 			]
 		}
