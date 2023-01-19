@@ -46,8 +46,9 @@
 
 				{ "run": "git commit --all --message \"Deploy\"" },
 
-				{ "run": "git fetch origin main" },
-				{ "run": "git merge main" },
+				{ "run": "git checkout main" },
+				{ "run": "git pull dev" },
+
 				{ "run": "git push origin dev:main" }
 			]
 		}
