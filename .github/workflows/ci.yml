@@ -20,9 +20,14 @@
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 				{ "run": "git rm -r --cached ." },
 
-				{ "run": "git commit --all --message \"Deploy\"" },
+				{ "run": "git commit --all --message \"Added build artifacts\"" },
 
-				{ "run": "git push --force origin dev:main" }
+				{
+					"uses": "peter-evans/create-pull-request@v4",
+          "with": {
+						"branch": "main"
+          }
+				}
 			]
 		}
 	}
