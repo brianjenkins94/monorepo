@@ -9,7 +9,7 @@
 		"cache": {
 			"runs-on": "ubuntu-latest",
 			"steps": [
-				{ "uses": "actions/checkout@v3", "with": { "ref": "main" } },
+				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } }
 			]
@@ -23,7 +23,7 @@
 				}
 			},
 			"steps": [
-				{ "uses": "actions/checkout@v3", "with": { "ref": "main" } },
+				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{ "run": "npx turbo run ${{ matrix.script }}" }
@@ -33,7 +33,7 @@
 			"runs-on": "ubuntu-latest",
 			"needs": ["build-lint-test"],
 			"steps": [
-				{ "uses": "actions/checkout@v3", "with": { "ref": "main" } },
+				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{ "run": "npx turbo run build" },
@@ -41,7 +41,7 @@
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 				{ "run": "git config user.name \"GitHub Actions\" && git config user.email \"actions@users.noreply.github.com\"" },
 				{ "run": "git commit --all --allow-empty-message --message \"\"" },
-				{ "run": "git fetch dist" },
+				{ "run": "git fetch origin dist" },
 				{ "run": "git checkout dist" },
 				{ "run": "git merge main" },
 				{ "run": "git push" }
