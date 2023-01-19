@@ -40,7 +40,6 @@
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 				{ "run": "git config user.name \"GitHub Actions\" && git config user.email \"actions@users.noreply.github.com\"" },
-				{ "run": "git commit --all --allow-empty-message --message \"\"" },
 				{ "run": "git pull main" },
 				{ "run": "git push" }
 			]
