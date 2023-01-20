@@ -19,15 +19,14 @@
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 
-				{
-					"uses": "peter-evans/create-pull-request@v4",
-					"with": {
-						"title": "Automated build",
-						"branch": "main",
-						"commit-message": "Updated build artifacts",
-						"token": "${{ secrets.PAT }}"
-					}
-				}
+				{ "run": "git add --all" },
+				{ "run": "git -c author.name=brianjenkins94 -c author.email=brianjenkins94@users.noreply.github.com -c committer.name=GitHub -c committer.email=noreply@github.com commit -m Updated build artifacts" },
+				{ "run": "git reset --hard" },
+				{ "run": "git clean -f -d" },
+				{ "run": "git checkout dev" },
+				{ "run": "git reset --hard origin/dev" },
+				{ "run": "git fetch origin main:refs/remotes/origin/main" },
+				{ "run": "git push origin HEAD:refs/heads/main" }
 			]
 		}
 	}
