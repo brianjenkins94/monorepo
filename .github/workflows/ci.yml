@@ -21,10 +21,6 @@
 				{ "run": "git add --all" },
 				{ "run": "git -c user.name=\"GitHub Actions\" -c user.email=\"actions@users.noreply.github.com\" commit --all --message \"Updated build artifacts\"" },
 
-				{ "run": "git reset --hard" },
-				{ "run": "git clean -f -d" },
-
-				{ "run": "git reset --hard origin/dev" },
 				{ "run": "git fetch --force origin main:refs/remotes/origin/main" },
 
 				{ "run": "git checkout main" },
