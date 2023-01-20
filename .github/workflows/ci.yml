@@ -26,6 +26,7 @@
 				{ "run": "git checkout dev" },
 				{ "run": "git reset --hard origin/dev" },
 				{ "run": "git fetch --force origin main:refs/remotes/origin/main" },
+				{ "run": "git checkout main" },
 				{ "run": "git push --force-with-lease origin HEAD:refs/heads/main" }
 			]
 		}
