@@ -21,10 +21,10 @@
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
-					"id": "cpr",
 					"with": {
 						"title": "Automated build",
-						"branch": "main",
+						"base": "main"
+						"branch": "dev",
 						"commit-message": "Updated build artifacts",
 						"token": "${{ secrets.PAT }}"
 					}
