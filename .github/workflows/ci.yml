@@ -12,20 +12,19 @@
 				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
-				{ "run": "git config user.name \"GitHub Actions\" && git config user.email \"actions@users.noreply.github.com\"" },
 
 				{ "run": "npx turbo run build" },
 
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 
-				{ "run": "git commit --all --message \"Updated build artifacts\"" },
+				{ "run": "git add --all" },
+				{ "run": "git -c committer.name=\"GitHub Actions\" -c committer.email=\"actions@users.noreply.github.com\" commit --all --message \"Updated build artifacts\"" },
 				{ "run": "git reset --hard" },
 				{ "run": "git clean -f -d" },
 				{ "run": "git checkout dev" },
 				{ "run": "git reset --hard origin/dev" },
 				{ "run": "git fetch --force origin main:refs/remotes/origin/main" },
-				{ "run": "git checkout main" },
 				{ "run": "git push --force-with-lease origin HEAD:refs/heads/main" }
 			]
 		}
