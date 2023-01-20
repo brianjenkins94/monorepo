@@ -18,13 +18,17 @@
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 
-				{ "run": "git add --all" },
 				{ "run": "git -c user.name=\"GitHub Actions\" -c user.email=\"actions@users.noreply.github.com\" commit --all --message \"Updated build artifacts\"" },
 
-				{ "run": "git fetch --force origin main:refs/remotes/origin/main" },
+				{ "run": "git fetch origin dev:dev" },
+				{ "run": "git reset --hard dev" },
 
-				{ "run": "git checkout main" },
-				{ "run": "git push --force-with-lease origin HEAD:refs/heads/main" }
+				{
+					"uses": "peter-evans/create-pull-request@v4",
+					"with": {
+						"branch": "main"
+					}
+				}
 			]
 		}
 	}
