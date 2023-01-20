@@ -23,7 +23,7 @@
 					"uses": "peter-evans/create-pull-request@v4",
 					"with": {
 						"title": "Automated build",
-						"base": "dev"
+						"base": "dev",
 						"branch": "main",
 						"commit-message": "Updated build artifacts"
 					}
