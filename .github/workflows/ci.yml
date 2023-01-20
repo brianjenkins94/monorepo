@@ -20,7 +20,7 @@
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 
 				{ "run": "git add --all" },
-				{ "run": "git -c author.name=brianjenkins94 -c author.email=brianjenkins94@users.noreply.github.com -c committer.name=GitHub -c committer.email=noreply@github.com commit -m Updated build artifacts" },
+				{ "run": "git -c author.name=brianjenkins94 -c author.email=brianjenkins94@users.noreply.github.com -c committer.name=GitHub -c committer.email=noreply@github.com commit -m \"Updated build artifacts\"" },
 				{ "run": "git reset --hard" },
 				{ "run": "git clean -f -d" },
 				{ "run": "git checkout dev" },
