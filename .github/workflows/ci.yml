@@ -19,7 +19,7 @@
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 
-				{ "run": "git commit --all -m \"Updated build artifacts\"" },
+				{ "run": "git commit --all --message \"Updated build artifacts\"" },
 				{ "run": "git reset --hard" },
 				{ "run": "git clean -f -d" },
 				{ "run": "git checkout dev" },
