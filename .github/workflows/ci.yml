@@ -18,14 +18,12 @@
 
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
-				{ "run": "git rm -r --cached ." },
-
-				{ "run": "git commit --all --message \"Added build artifacts\"" },
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
 					"with": {
 						"title": "Automated build",
+						"base": "dev"
 						"branch": "main",
 						"commit-message": "Updated build artifacts"
 					}
