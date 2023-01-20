@@ -19,6 +19,9 @@
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 
+				{ "run": "git fetch origin dev:dev" },
+				{ "run": "git reset --hard dev" },
+
 				{ "run": "git add --all" },
 				{ "run": "git -c author.name=brianjenkins94 -c author.email=brianjenkins94@users.noreply.github.com -c committer.name=GitHub -c committer.email=noreply@github.com commit -m \"Updated build artifacts\"" },
 				{ "run": "git reset --hard" },
