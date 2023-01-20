@@ -23,9 +23,9 @@
 					"uses": "peter-evans/create-pull-request@v4",
 					"with": {
 						"title": "Automated build",
-						"base": "dev",
 						"branch": "main",
-						"commit-message": "Updated build artifacts"
+						"commit-message": "Updated build artifacts",
+						"token": "${{ secrets.PAT }}"
 					}
 				}
 			]
