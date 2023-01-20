@@ -34,9 +34,7 @@
 					"uses": "peter-evans/enable-pull-request-automerge@v2",
 					"id": "cpr",
 					"with": {
-						"title": "Automated build",
-						"branch": "main",
-						"commit-message": "Updated build artifacts",
+						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}",
 						"token": "${{ secrets.PAT }}"
 					}
 				}
