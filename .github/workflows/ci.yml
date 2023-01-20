@@ -19,7 +19,7 @@
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
 
 				{ "run": "git add --all" },
-				{ "run": "git -c committer.name=\"GitHub Actions\" -c committer.email=\"actions@users.noreply.github.com\" commit --all --message \"Updated build artifacts\"" },
+				{ "run": "git -c user.name=\"GitHub Actions\" -c user.email=\"actions@users.noreply.github.com\" commit --all --message \"Updated build artifacts\"" },
 				{ "run": "git reset --hard" },
 				{ "run": "git clean -f -d" },
 				{ "run": "git checkout dev" },
