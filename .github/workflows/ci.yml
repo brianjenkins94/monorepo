@@ -20,7 +20,9 @@
 
 				{ "run": "git -c user.name=\"GitHub Actions\" -c user.email=\"actions@users.noreply.github.com\" commit --all --message \"Updated build artifacts\"" },
 
+				{ "run": "git fetch main" },
 				{ "run": "git checkout main" },
+				{ "run": "git pull dev" },
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
