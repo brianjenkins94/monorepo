@@ -11,13 +11,13 @@
 			"steps": [
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "actions/checkout@v3", "with": { "path": "dev", "ref": "dev" } },
-				{ "uses": "actions/checkout@v3", "with": { "path": "main", "ref": "main" } },
 
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "dev" } },
 				{ "run": "npx turbo run build", "working-directory": "dev" },
 				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev" },
 
+				{ "uses": "actions/checkout@v3", "with": { "path": "main", "ref": "main" } },
 				{ "run": "rsync --delete --exclude=\".git/\" --recursive dev/ main" },
 
 				{
@@ -26,6 +26,7 @@
 					"with": {
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
+						"branch": "main",
 						"delete-branch": true,
 						"path": "main"
 					}
