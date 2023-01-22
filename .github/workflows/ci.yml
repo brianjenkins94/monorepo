@@ -9,24 +9,23 @@
 		"push": {
 			"runs-on": "ubuntu-latest",
 			"steps": [
-				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
+				{ "uses": "actions/checkout@v3", "with": { "path": "dev", "ref": "dev" } },
+				{ "uses": "actions/checkout@v3", "with": { "path": "main", "ref": "main" } },
 
-				{ "run": "npx turbo run build" },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "dev" } },
+				{ "run": "npx turbo run build", "working-directory": "dev" },
+				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
+				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev"  },
 
-				{ "run": "npm pkg delete workspaces" },
-				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
-
-				{ "run": "git -c user.name=\"GitHub Actions\" -c user.email=\"actions@users.noreply.github.com\" commit --all --message \"Updated build artifacts\"" },
+				{ "run": "rsync --archive --exclude=\".git/\" dev/ main" },
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
 					"with": {
 						"title": "Automated build",
-						"branch": "main",
 						"commit-message": "Updated build artifacts",
-						"token": "${{ secrets.PAT }}"
+						"path": "main"
 					}
 				}
 			]
