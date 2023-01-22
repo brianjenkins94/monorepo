@@ -26,7 +26,6 @@
 					"with": {
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
-						"branch": "main",
 						"delete-branch": true,
 						"path": "main"
 					}
