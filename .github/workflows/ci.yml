@@ -13,21 +13,19 @@
 				{ "uses": "actions/checkout@v3", "with": { "path": "dev", "ref": "dev" } },
 				{ "uses": "actions/checkout@v3", "with": { "path": "main", "ref": "main" } },
 
-				{ "run": "cd dev" },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "dev" } },
-				{ "run": "npx turbo run build" },
-				{ "run": "npm pkg delete workspaces" },
-				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
+				{ "run": "npx turbo run build", "working-directory": "dev" },
+				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
+				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev"  },
 
-				{ "run": "cd .." },
 				{ "run": "rsync --archive --exclude=\".*/\" dev main" },
 
-				{ "run": "cd main" },
 				{
 					"uses": "peter-evans/create-pull-request@v4",
 					"with": {
 						"title": "Automated build",
-						"commit-message": "Updated build artifacts"
+						"commit-message": "Updated build artifacts",
+						"path": "main"
 					}
 				}
 			]
