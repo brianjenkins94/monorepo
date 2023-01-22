@@ -33,8 +33,8 @@
 			"runs-on": "ubuntu-latest",
 			"needs": ["build-lint-test"],
 			"steps": [
-				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "actions/checkout@v3", "with": { "path": "dev", "ref": "dev" } },
+				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "dev" } },
 				{ "run": "npx turbo run build", "working-directory": "dev" },
@@ -51,14 +51,16 @@
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
 						"delete-branch": true,
-						"path": "main"
+						"path": "main",
+						"token": "${{ secrets.PAT }}"
 					}
 				},
 				{
 					"if": "steps.cpr.outputs.pull-request-operation == 'created'",
 					"uses": "peter-evans/enable-pull-request-automerge@v2",
 					"with": {
-						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}"
+						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}",
+						"token": "${{ secrets.PAT }}"
 					}
 				}
 			]
