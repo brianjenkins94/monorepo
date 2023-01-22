@@ -22,7 +22,7 @@
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
-					"id: cpr",
+					"id": "cpr",
 					"with": {
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
