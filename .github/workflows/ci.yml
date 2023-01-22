@@ -18,16 +18,24 @@
 				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev"  },
 
-				{ "run": "rsync --archive --exclude=\".git/\" dev/ main" },
+				{ "run": "rsync --delete --exclude=\".git/\" --recursive  dev/ main" },
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
+					"id": "cpr",
 					"with": {
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
 						"path": "main"
 					}
-				}
+				},
+				{
+					"if": "steps.cpr.outputs.pull-request-operation == 'created'",
+					"uses": "peter-evans/enable-pull-request-automerge@v2",
+					"with": {
+						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}"
+					}
+				},
 			]
 		}
 	}
