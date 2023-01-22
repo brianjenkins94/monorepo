@@ -18,7 +18,7 @@
 				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev"  },
 
-				{ "run": "rsync --archive --exclude=\".*/\" dev main" },
+				{ "run": "rsync --archive --exclude=\".git/\" dev/ main" },
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
