@@ -18,7 +18,7 @@
 				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev" },
 
-				{ "run": "rsync --delete --exclude=\".git/\" --recursive  dev/ main" },
+				{ "run": "rsync --delete --exclude=\".git/\" --recursive dev/ main" },
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
@@ -26,6 +26,7 @@
 					"with": {
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
+						"delete-branch": true,
 						"path": "main"
 					}
 				},
@@ -35,7 +36,7 @@
 					"with": {
 						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}"
 					}
-				},
+				}
 			]
 		}
 	}
