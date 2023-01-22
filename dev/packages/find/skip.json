@@ -1,0 +1,43 @@
+{
+  "name": "find",
+  "version": "0.1.0",
+  "description": "Approximation of GNU find with `-exec` support.",
+  "author": "John Freeman",
+  "contributors": [
+    {
+      "name": "Brian Jenkins"
+    }
+  ],
+  "license": "MIT",
+  "main": "find.ts",
+  "types": "spawnReadline.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build --watch",
+    "build": "tsup spawnReadline.ts --format esm --dts",
+    "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "^7.32.0",
+    "ts-node": "latest",
+    "tsup": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/find.js",
+      "types": "./dist/find.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "sideEffects": false
+}
