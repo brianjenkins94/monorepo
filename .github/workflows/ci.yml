@@ -16,9 +16,9 @@
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "dev" } },
 				{ "run": "npx turbo run build", "working-directory": "dev" },
 				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
-				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev"  },
+				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev" },
 
-				{ "run": "rsync --recursive --delete --exclude=\".git/\" dev/ main" },
+				{ "run": "rsync --delete --exclude=\".git/\" --recursive  dev/ main" },
 
 				{
 					"uses": "peter-evans/create-pull-request@v4",
@@ -26,16 +26,14 @@
 					"with": {
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
-						"path": "main",
-						"token": "${{ secrets.PAT }}"
+						"path": "main"
 					}
 				},
 				{
 					"if": "steps.cpr.outputs.pull-request-operation == 'created'",
 					"uses": "peter-evans/enable-pull-request-automerge@v2",
 					"with": {
-						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}",
-						"token": "${{ secrets.PAT }}"
+						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}"
 					}
 				},
 			]
