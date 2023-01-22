@@ -51,14 +51,16 @@
 						"title": "Automated build",
 						"commit-message": "Updated build artifacts",
 						"delete-branch": true,
-						"path": "main"
+						"path": "main",
+						"token": "${{ secrets.PAT }}"
 					}
 				},
 				{
 					"if": "steps.cpr.outputs.pull-request-operation == 'created'",
 					"uses": "peter-evans/enable-pull-request-automerge@v2",
 					"with": {
-						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}"
+						"pull-request-number": "${{ steps.cpr.outputs.pull-request-number }}",
+						"token": "${{ secrets.PAT }}"
 					}
 				}
 			]
