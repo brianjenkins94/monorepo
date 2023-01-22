@@ -16,7 +16,7 @@
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "dev" } },
 				{ "run": "npx turbo run build", "working-directory": "dev" },
 				{ "run": "npm pkg delete workspaces", "working-directory": "dev" },
-				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev"  },
+				{ "run": "sed -i \"/^dist$/d\" .gitignore", "working-directory": "dev" },
 
 				{ "run": "rsync --delete --exclude=\".git/\" --recursive  dev/ main" },
 
