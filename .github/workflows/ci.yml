@@ -14,7 +14,7 @@
 				{ "uses": "actions/checkout@v3", "with": { "path": "main", "ref": "main" } },
 
 				{ "run": "cd dev" },
-				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "dev" } },
 				{ "run": "npx turbo run build" },
 				{ "run": "npm pkg delete workspaces" },
 				{ "run": "sed -i \"/^dist$/d\" .gitignore" },
