@@ -25,7 +25,8 @@
 					"id": "cpr",
 					"with": {
 						"title": "Automated build",
-						"commit-message": "Updated build artifacts",
+						"commit-message": "Updated build artifacts",,
+						"delete-branch": true,
 						"path": "main"
 					}
 				},
