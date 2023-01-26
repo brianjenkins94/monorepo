@@ -63,6 +63,13 @@
 					"env": {
 						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
 					}
+				},
+				{
+					"uses": "peter-evans/enable-pull-request-automerge@v2",
+					"with": {
+						"pull-request-number": "${{ github.event.pull_request.number }}",
+						"token": "${{ secrets.PAT }}"
+					}
 				}
 			],
 			"outputs": {
