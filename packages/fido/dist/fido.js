@@ -67,14 +67,17 @@ async function parseXml(xmlString) {
 }
 async function attemptParse(response) {
   let body;
-  if (/\bjson\b/iu.test(response.headers?.get("Content-Type"))) {
+  const contentType = response.headers?.get("Content-Type");
+  if (contentType.endsWith("json")) {
     try {
       body = response.json();
     } catch (error) {
     }
-  } else if (SaxesParser !== null && /^text|.*?(ht|x)ml/iu.test(response.headers?.get("Content-Type"))) {
+  } else if (contentType.startsWith("text") && !contentType.endsWith("xml")) {
+    body = response.text();
+  } else if (SaxesParser !== null && contentType.endsWith("xml")) {
     try {
-      SaxesParser ?? (SaxesParser = (await import("./saxes-NOFLGYAS.js"))["SaxesParser"]);
+      SaxesParser ?? (SaxesParser = (await import("./saxes-NOFLGYAS.js"))["default"]["SaxesParser"]);
       body = parseXml(await response.text());
     } catch (error) {
       SaxesParser = null;
@@ -96,7 +99,7 @@ function extendedFetch(url, options) {
           }
         }
       }
-      if (/\bjson\b/iu.test(options["headers"]["Content-Type"]) && typeof options.body === "object") {
+      if (options["headers"]["Content-Type"].endsWith("json") && typeof options.body === "object") {
         if (options["debug"]) {
           requestBuffer.push(...util.inspect(options.body, { "compact": false }).split("\n"));
         }
@@ -130,7 +133,7 @@ function extendedFetch(url, options) {
         flush([requestBuffer, responseBuffer], console.log);
       }).catch(function(error) {
         if (options["debug"]) {
-          responseBuffer.push(error.cause.toString());
+          responseBuffer.push(error.toString());
         }
         flush([requestBuffer, responseBuffer], console.log);
         throw new Error(error);

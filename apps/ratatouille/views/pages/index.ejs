@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
 	<!-- Metadata -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="" />
 
+	<!-- Title -->
+	<title></title>
+
 	<!-- Thumbnails -->
-	<title>Welcome!</title>
+	<link rel="shortcut icon" href="/images/favicon.png" />
 
-	<!-- Favicon -->
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤔</text></svg>">
-
-	<!-- Stylesheets  -->
+	<!-- Libraries -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize/modern-normalize.min.css" />
-	<!-- <link rel="stylesheet" href="../css/fontawesome-5.15.4.css" /> -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" /> -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css" />
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="/css/style.css" />
 
 	<!-- Inline Stylesheet -->
 	<style>
@@ -29,15 +32,18 @@
 </head>
 <body class="markdown-body">
 
-    <h1>Oh hey 😅</h1>
+	<%- include("../partials/_header.ejs") %>
 
-    <p>You aren't supposed to be here yet.</p>
+	<!-- #main -->
+	<main id="main"></main>
+
+	<%- include("../partials/_footer.ejs") %>
 
 	<!-- Libraries -->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script> -->
 
 	<!-- Scripts -->
-	<!-- <script src="js/main.js"></script> -->
+	<script src="/js/main.js"></script>
 
 	<!-- Inline Script -->
 	<script></script>
