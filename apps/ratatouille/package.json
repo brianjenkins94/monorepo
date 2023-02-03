@@ -12,8 +12,7 @@
   ],
   "scripts": {
     "scrape": "node --experimental-specifier-resolution=node --loader=ts-node/esm scraper/chromium.ts",
-    "start": "node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts"
   },
   "dependencies": {
     "cheerio": "latest",
