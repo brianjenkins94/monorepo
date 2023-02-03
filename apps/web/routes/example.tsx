@@ -9,7 +9,6 @@ export function get(request: NextApiRequest, response: NextApiResponse): Promise
 			<Head>
 				<title>Example</title>
 			</Head>
-
 		</>
 	);
 }
