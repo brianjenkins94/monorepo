@@ -5,11 +5,11 @@
   "author": "Brian Jenkins",
   "license": "MIT",
   "main": "find.ts",
-  "types": "spawnReadline.ts",
+  "types": "find.ts",
   "type": "module",
   "scripts": {
     "dev": "npm run build --watch",
-    "build": "tsup spawnReadline.ts --format esm --dts",
+    "build": "tsup find.ts --format esm --dts",
     "test": "node --experimental-specifier-resolution=node --loader=ts-node/esm find.ts"
   },
   "dependencies": {
