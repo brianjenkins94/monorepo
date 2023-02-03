@@ -101,6 +101,7 @@
 		"@typescript-eslint/sort-type-union-intersection-members": "off",
 		"@typescript-eslint/strict-boolean-expressions": "off",
 		"capitalized-comments": "off",
+		"class-methods-use-this": "off",
 		"consistent-return": "off",
 		"default-case-last": "off",
 		"func-names": "off",
