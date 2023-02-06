@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@next/font": "latest",
-    "next": "13.0.7",
+    "next": "latest",
     "react-dom": "^18",
     "react": "^18"
   },
