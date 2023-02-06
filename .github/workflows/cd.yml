@@ -78,9 +78,10 @@
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
 				{
 					"env": {
+						"GITHUB_TOKEN": "${{ secrets.PAT }}",
 						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
 					},
-					"run": "echo ${{ github.ref_name }}"
+					"run": "npm run publish --workspace ${{ needs.release.outputs.package }} || exit 0"
 				}
 			]
 		}
