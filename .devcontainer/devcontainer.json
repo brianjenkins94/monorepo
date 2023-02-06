@@ -27,6 +27,10 @@
 				"files.trimTrailingWhitespace": true,
 				"javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 				"javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+				"search.exclude": {
+					"**/.next": true,
+					"**/package-lock.json": true
+				},
 				"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 				"typescript.format.insertSpaceBeforeFunctionParenthesis": false
 			}
