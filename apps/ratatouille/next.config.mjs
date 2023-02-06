@@ -1,9 +1,7 @@
 // @ts-check
 
-import * as fs from "fs";
 import * as path from "path";
 import * as url from "url";
-import transpileModules from "next-transpile-modules";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,7 +9,7 @@ const __dirname = path.dirname(__filename);
 // TODO: Extract to `./config`
 const __root = __dirname;
 
-const withTranspileModules = transpileModules(fs.readdirSync(path.join(__root, "..", "..", "packages")));
+//const withTranspileModules = transpileModules(fs.readdirSync(path.join(__root, "..", "..", "packages")));
 
 const contentSecurityPolicyHeaders = {
 	"Content-Security-Policy": Object.entries({
@@ -44,7 +42,7 @@ const contentSecurityPolicyHeaders = {
 	"X-XSS-Protection": "0"
 };
 
-export default withTranspileModules({
+export default {
 	"env": {
 		"NEXT_PUBLIC_API_MOCKING": "enabled"
 	},
@@ -87,4 +85,4 @@ export default withTranspileModules({
 
 		return config;
 	}
-});
+};
