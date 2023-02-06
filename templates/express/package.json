@@ -1,0 +1,29 @@
+{
+  "name": "express-template",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "author": "Brian Jenkins",
+  "license": "MIT",
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts"
+  },
+  "dependencies": {
+    "ejs": "latest",
+    "express": "latest",
+    "helmet": "latest",
+    "morgan": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "sideEffects": false
+}

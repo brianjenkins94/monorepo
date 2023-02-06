@@ -2,28 +2,21 @@
   "name": "ratatouille",
   "version": "0.0.0",
   "description": "",
-  "private": true,
   "type": "module",
-  "author": "Safia Abdalla",
-  "contributors": [
-    {
-      "name": "Brian Jenkins"
-    }
-  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianjenkins94/ratatouille.git"
+  },
+  "author": "Brian Jenkins",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brianjenkins94/ratatouille/issues"
+  },
+  "homepage": "https://github.com/brianjenkins94/ratatouille#readme",
   "scripts": {
-    "publish": "pwd && echo \"Publishing!!\"",
-    "scrape": "node --experimental-specifier-resolution=node --loader=ts-node/esm scraper",
-    "start": "node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts"
+    "publish": "npm run build && git clone https://github.com/brianjenkins94/ratatouille.git ../ratatouille-main && rsync --delete --exclude=\".git/\" --recursive ratatouille/out/ ratatouille-main/docs && git commit --all --message \"Automated build\""
   },
-  "dependencies": {
-    "cheerio": "latest",
-    "ejs": "latest",
-    "express": "latest",
-    "fido": "*",
-    "helmet": "latest",
-    "morgan": "latest",
-    "playwright-chromium": "latest"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -37,3 +30,5 @@
   },
   "sideEffects": false
 }
+
+
