@@ -11,7 +11,7 @@
     }
   ],
   "scripts": {
-    "publish": "pwd && echo \"Publishing!\"",
+    "publish": "pwd && echo \"Publishing!!\"",
     "scrape": "node --experimental-specifier-resolution=node --loader=ts-node/esm scraper",
     "start": "node --experimental-specifier-resolution=node --loader=ts-node/esm server.ts"
   },
