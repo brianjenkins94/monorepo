@@ -67,7 +67,6 @@ export default {
 	"rewrites": async function() {
 		return [];
 	},
-	"transpilePackages": [],
 	"webpack": function(config, options) {
 		config.optimization.minimize = process.env["NODE_ENV"] === "production";
 
