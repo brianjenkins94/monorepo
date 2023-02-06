@@ -81,7 +81,8 @@
 						"GITHUB_TOKEN": "${{ secrets.PAT }}",
 						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
 					},
-					"run": "npm run publish --workspace ${{ needs.release.outputs.package }} || exit 0"
+					"run": "npm run publish || exit 0",
+					"working-directory": "${{ needs.release.outputs.package }}"
 				}
 			]
 		}
