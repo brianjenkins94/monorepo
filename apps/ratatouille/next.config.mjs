@@ -59,6 +59,9 @@ export default {
 			}
 		];
 	},
+	"images": {
+		"unoptimized": true
+	},
 	"pageExtensions": ["js", "jsx", "ts", "tsx", "md", "mdx"],
 	"reactStrictMode": true,
 	"redirects": async function() {
