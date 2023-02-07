@@ -19,6 +19,7 @@
     "start": "next dev"
   },
   "dependencies": {
+    "fido": "*",
     "next": "latest",
     "react-dom": "^18",
     "react": "^18"
