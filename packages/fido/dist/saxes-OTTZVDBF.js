@@ -132,11 +132,13 @@ var require_saxes = __commonJS({
     var XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace";
     var XMLNS_NAMESPACE = "http://www.w3.org/2000/xmlns/";
     var rootNS = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
       __proto__: null,
       xml: XML_NAMESPACE,
       xmlns: XMLNS_NAMESPACE
     };
     var XML_ENTITIES = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
       __proto__: null,
       amp: "&",
       gt: ">",
@@ -289,6 +291,9 @@ var require_saxes = __commonJS({
       ready: "readyHandler"
     };
     var SaxesParser = class {
+      /**
+       * @param opt The parser options.
+       */
       constructor(opt) {
         this.opt = opt !== null && opt !== void 0 ? opt : {};
         this.fragmentOpt = !!this.opt.fragment;
@@ -315,6 +320,7 @@ var require_saxes = __commonJS({
           this.pushAttrib = this.pushAttribPlain;
         }
         this.stateTable = [
+          /* eslint-disable @typescript-eslint/unbound-method */
           this.sBegin,
           this.sBeginWhitespace,
           this.sDoctype,
@@ -360,9 +366,14 @@ var require_saxes = __commonJS({
           this.sAttribValueUnquoted,
           this.sCloseTag,
           this.sCloseTagSawWhite
+          /* eslint-enable @typescript-eslint/unbound-method */
         ];
         this._init();
       }
+      /**
+       * Indicates whether or not the parser is closed. If ``true``, wait for
+       * the ``ready`` event to write again.
+       */
       get closed() {
         return this._closed;
       }
@@ -411,18 +422,61 @@ var require_saxes = __commonJS({
         this.ENTITIES = Object.create(XML_ENTITIES);
         (_a = this.readyHandler) === null || _a === void 0 ? void 0 : _a.call(this);
       }
+      /**
+       * The stream position the parser is currently looking at. This field is
+       * zero-based.
+       *
+       * This field is not based on counting Unicode characters but is to be
+       * interpreted as a plain index into a JavaScript string.
+       */
       get position() {
         return this.chunkPosition + this.i;
       }
+      /**
+       * The column number of the next character to be read by the parser.  *
+       * This field is zero-based. (The first column in a line is 0.)
+       *
+       * This field reports the index at which the next character would be in the
+       * line if the line were represented as a JavaScript string.  Note that this
+       * *can* be different to a count based on the number of *Unicode characters*
+       * due to how JavaScript handles astral plane characters.
+       *
+       * See [[column]] for a number that corresponds to a count of Unicode
+       * characters.
+       */
       get columnIndex() {
         return this.position - this.positionAtNewLine;
       }
+      /**
+       * Set an event listener on an event. The parser supports one handler per
+       * event type. If you try to set an event handler over an existing handler,
+       * the old handler is silently overwritten.
+       *
+       * @param name The event to listen to.
+       *
+       * @param handler The handler to set.
+       */
       on(name, handler) {
         this[EVENT_NAME_TO_HANDLER_NAME[name]] = handler;
       }
+      /**
+       * Unset an event handler.
+       *
+       * @parma name The event to stop listening to.
+       */
       off(name) {
         this[EVENT_NAME_TO_HANDLER_NAME[name]] = void 0;
       }
+      /**
+       * Make an error object. The error object will have a message that contains
+       * the ``fileName`` option passed at the creation of the parser. If position
+       * tracking was turned on, it will also have line and column number
+       * information.
+       *
+       * @param message The message describing the error to report.
+       *
+       * @returns An error object with a properly formatted message.
+       */
       makeError(message) {
         var _a;
         let msg = (_a = this.fileName) !== null && _a !== void 0 ? _a : "";
@@ -437,6 +491,15 @@ var require_saxes = __commonJS({
         }
         return new Error(msg + message);
       }
+      /**
+       * Report a parsing error. This method is made public so that client code may
+       * check for issues that are outside the scope of this project and can report
+       * errors.
+       *
+       * @param message The error to report.
+       *
+       * @returns this
+       */
       fail(message) {
         const err = this.makeError(message);
         const handler = this.errorHandler;
@@ -447,6 +510,15 @@ var require_saxes = __commonJS({
         }
         return this;
       }
+      /**
+       * Write a XML data to the parser.
+       *
+       * @param chunk The XML data to write.
+       *
+       * @returns this
+       */
+      // We do need object for the type here. Yes, it often causes problems
+      // but not in this case.
       write(chunk) {
         if (this.closed) {
           return this.fail("cannot write after close; assign an onready handler.");
@@ -464,7 +536,9 @@ var require_saxes = __commonJS({
         }
         let limit = chunk.length;
         const lastCode = chunk.charCodeAt(limit - 1);
-        if (!end && (lastCode === CR || lastCode >= 55296 && lastCode <= 56319)) {
+        if (!end && // A trailing CR or surrogate must be carried over to the next
+        // chunk.
+        (lastCode === CR || lastCode >= 55296 && lastCode <= 56319)) {
           this.carriedFromPrevious = chunk[limit - 1];
           limit--;
           chunk = chunk.slice(0, limit);
@@ -478,9 +552,23 @@ var require_saxes = __commonJS({
         this.chunkPosition += limit;
         return end ? this.end() : this;
       }
+      /**
+       * Close the current stream. Perform final well-formedness checks and reset
+       * the parser tstate.
+       *
+       * @returns this
+       */
       close() {
         return this.write(null);
       }
+      /**
+       * Get a single code point out of the current chunk. This updates the current
+       * position if we do position tracking.
+       *
+       * This is the algorithm to use for XML 1.0.
+       *
+       * @returns The character read.
+       */
       getCode10() {
         const { chunk, i } = this;
         this.prevI = i;
@@ -526,6 +614,14 @@ var require_saxes = __commonJS({
         }
         return final;
       }
+      /**
+       * Get a single code point out of the current chunk. This updates the current
+       * position if we do position tracking.
+       *
+       * This is the algorithm to use for XML 1.1.
+       *
+       * @returns {number} The character read.
+       */
       getCode11() {
         const { chunk, i } = this;
         this.prevI = i;
@@ -575,6 +671,10 @@ var require_saxes = __commonJS({
         }
         return final;
       }
+      /**
+       * Like ``getCode`` but with the return value normalized so that ``NL`` is
+       * returned for ``NL_LIKE``.
+       */
       getCodeNorm() {
         const c = this.getCode();
         return c === NL_LIKE ? NL : c;
@@ -583,6 +683,17 @@ var require_saxes = __commonJS({
         this.i = this.prevI;
         this.column--;
       }
+      /**
+       * Capture characters into a buffer until encountering one of a set of
+       * characters.
+       *
+       * @param chars An array of codepoints. Encountering a character in the array
+       * ends the capture. (``chars`` may safely contain ``NL``.)
+       *
+       * @return The character code that made the capture end, or ``EOC`` if we hit
+       * the end of the chunk. The return value cannot be NL_LIKE: NL is returned
+       * instead.
+       */
       captureTo(chars) {
         let { i: start } = this;
         const { chunk } = this;
@@ -601,6 +712,15 @@ var require_saxes = __commonJS({
           }
         }
       }
+      /**
+       * Capture characters into a buffer until encountering a character.
+       *
+       * @param char The codepoint that ends the capture. **NOTE ``char`` MAY NOT
+       * CONTAIN ``NL``.** Passing ``NL`` will result in buggy behavior.
+       *
+       * @return ``true`` if we ran into the character. Otherwise, we ran into the
+       * end of the current chunk.
+       */
       captureToChar(char) {
         let { i: start } = this;
         const { chunk } = this;
@@ -624,6 +744,14 @@ var require_saxes = __commonJS({
           }
         }
       }
+      /**
+       * Capture characters that satisfy ``isNameChar`` into the ``name`` field of
+       * this parser.
+       *
+       * @return The character code that made the test fail, or ``EOC`` if we hit
+       * the end of the chunk. The return value cannot be NL_LIKE: NL is returned
+       * instead.
+       */
       captureNameChars() {
         const { chunk, i: start } = this;
         while (true) {
@@ -638,6 +766,13 @@ var require_saxes = __commonJS({
           }
         }
       }
+      /**
+       * Skip white spaces.
+       *
+       * @return The character that ended the skip, or ``EOC`` if we hit
+       * the end of the chunk. The return value cannot be NL_LIKE: NL is returned
+       * instead.
+       */
       skipSpaces() {
         while (true) {
           const c = this.getCodeNorm();
@@ -656,6 +791,9 @@ var require_saxes = __commonJS({
           this.getCode = this.getCode11;
         }
       }
+      // STATE ENGINE METHODS
+      // This needs to be a state separate from S_BEGIN_WHITESPACE because we want
+      // to be sure never to come back to this state later.
       sBegin() {
         if (this.chunk.charCodeAt(0) === 65279) {
           this.i++;
@@ -956,6 +1094,8 @@ var require_saxes = __commonJS({
             this.state = S_CDATA;
         }
       }
+      // We need this separate state to check the first character fo the pi target
+      // with this.nameStartCheck which allows less characters than this.nameCheck.
       sPIFirstChar() {
         const c = this.getCodeNorm();
         if (this.nameStartCheck(c)) {
@@ -1379,6 +1519,7 @@ var require_saxes = __commonJS({
             this.fail("disallowed character in closing tag.");
         }
       }
+      // END OF STATE ENGINE METHODS
       handleTextInRoot() {
         let { i: start, forbiddenState } = this;
         const { chunk, textHandler: handler } = this;
@@ -1532,6 +1673,12 @@ var require_saxes = __commonJS({
         this.attribList.push(attr);
         (_a = this.attributeHandler) === null || _a === void 0 ? void 0 : _a.call(this, attr);
       }
+      /**
+       * End parsing. This performs final well-formedness checks and resets the
+       * parser to a clean state.
+       *
+       * @returns this
+       */
       end() {
         var _a, _b;
         if (!this.sawRoot) {
@@ -1555,6 +1702,13 @@ var require_saxes = __commonJS({
         this._init();
         return this;
       }
+      /**
+       * Resolve a namespace prefix.
+       *
+       * @param prefix The prefix to resolve.
+       *
+       * @returns The namespace URI or ``undefined`` if the prefix is not defined.
+       */
       resolve(prefix) {
         var _a, _b;
         let uri = this.topNS[prefix];
@@ -1574,6 +1728,13 @@ var require_saxes = __commonJS({
         }
         return (_b = (_a = this.opt).resolvePrefix) === null || _b === void 0 ? void 0 : _b.call(_a, prefix);
       }
+      /**
+       * Parse a qname into its prefix and local name parts.
+       *
+       * @param name The name to parse
+       *
+       * @returns
+       */
       qname(name) {
         const colon = name.indexOf(":");
         if (colon === -1) {
@@ -1645,6 +1806,11 @@ var require_saxes = __commonJS({
         }
         this.attribList = [];
       }
+      /**
+       * Handle a complete open tag. This parser code calls this once it has seen
+       * the whole tag. This method checks for well-formeness and then emits
+       * ``onopentag``.
+       */
       openTag() {
         var _a;
         this.processAttribs();
@@ -1656,6 +1822,11 @@ var require_saxes = __commonJS({
         this.state = S_TEXT;
         this.name = "";
       }
+      /**
+       * Handle a complete self-closing tag. This parser code calls this once it has
+       * seen the whole tag. This method checks for well-formeness and then emits
+       * ``onopentag`` and ``onclosetag``.
+       */
       openSelfClosingTag() {
         var _a, _b, _c;
         this.processAttribs();
@@ -1671,6 +1842,11 @@ var require_saxes = __commonJS({
         this.state = S_TEXT;
         this.name = "";
       }
+      /**
+       * Handle a complete close tag. This parser code calls this once it has seen
+       * the whole tag. This method checks for well-formeness and then emits
+       * ``onclosetag``.
+       */
       closeTag() {
         const { tags, name } = this;
         this.state = S_TEXT;
@@ -1698,6 +1874,13 @@ var require_saxes = __commonJS({
           this.text += `</${name}>`;
         }
       }
+      /**
+       * Resolves an entity. Makes any necessary well-formedness checks.
+       *
+       * @param entity The entity to resolve.
+       *
+       * @returns The parsed entity.
+       */
       parseEntity(entity) {
         if (entity[0] !== "#") {
           const defined = this.ENTITIES[entity];
@@ -1724,24 +1907,32 @@ var require_saxes = __commonJS({
   }
 });
 export default require_saxes();
-/**
- * Character class utilities for XML NS 1.0 edition 3.
- *
- * @author Louis-Dominique Dubeau
- * @license MIT
- * @copyright Louis-Dominique Dubeau
- */
-/**
- * Character classes and associated utilities for the 2nd edition of XML 1.1.
- *
- * @author Louis-Dominique Dubeau
- * @license MIT
- * @copyright Louis-Dominique Dubeau
- */
-/**
- * Character classes and associated utilities for the 5th edition of XML 1.0.
- *
- * @author Louis-Dominique Dubeau
- * @license MIT
- * @copyright Louis-Dominique Dubeau
- */
+/*! Bundled license information:
+
+xmlchars/xml/1.0/ed5.js:
+  (**
+   * Character classes and associated utilities for the 5th edition of XML 1.0.
+   *
+   * @author Louis-Dominique Dubeau
+   * @license MIT
+   * @copyright Louis-Dominique Dubeau
+   *)
+
+xmlchars/xml/1.1/ed2.js:
+  (**
+   * Character classes and associated utilities for the 2nd edition of XML 1.1.
+   *
+   * @author Louis-Dominique Dubeau
+   * @license MIT
+   * @copyright Louis-Dominique Dubeau
+   *)
+
+xmlchars/xmlns/1.0/ed3.js:
+  (**
+   * Character class utilities for XML NS 1.0 edition 3.
+   *
+   * @author Louis-Dominique Dubeau
+   * @license MIT
+   * @copyright Louis-Dominique Dubeau
+   *)
+*/
