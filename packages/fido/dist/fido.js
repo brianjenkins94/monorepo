@@ -45,7 +45,7 @@ async function parseXml(xmlString) {
       };
       if (current !== void 0) {
         element["parent"] = current;
-        current["children"] ?? (current["children"] = []);
+        current["children"] ??= [];
         current.children.push(element);
       } else {
         object = element;
@@ -77,7 +77,7 @@ async function attemptParse(response) {
     body = response.text();
   } else if (SaxesParser !== null && contentType.endsWith("xml")) {
     try {
-      SaxesParser ?? (SaxesParser = (await import("./saxes-OTTZVDBF.js"))["default"]["SaxesParser"]);
+      SaxesParser ??= (await import("./saxes-OTTZVDBF.js"))["default"]["SaxesParser"];
       body = parseXml(await response.text());
     } catch (error) {
       SaxesParser = null;

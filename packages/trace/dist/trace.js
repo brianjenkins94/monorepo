@@ -6,6 +6,13 @@ function getId() {
   return count;
 }
 var Span = class {
+  name;
+  id;
+  parentId;
+  duration;
+  attributes;
+  status;
+  _start;
   constructor({ name, parentId, attributes = {}, startTime }) {
     this.name = name;
     this.parentId = parentId;
