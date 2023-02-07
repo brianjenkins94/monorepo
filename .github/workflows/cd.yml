@@ -64,17 +64,14 @@
 						"GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
 					}
 				}
-			],
-			"outputs": {
-				"packages": "${{ fromJSON(needs.changes.outputs.packages) }}"
-			}
+			]
 		},
 		"publish": {
 			"runs-on": "ubuntu-latest",
-			"needs": ["release"],
+			"needs": ["changes", "release"],
 			"strategy": {
 				"matrix": {
-					"package": "${{ needs.release.outputs.packages }}"
+					"package": "${{ fromJSON(needs.changes.outputs.packages) }}"
 				}
 			},
 			"steps": [
