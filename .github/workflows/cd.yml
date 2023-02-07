@@ -78,6 +78,7 @@
 				{ "uses": "actions/checkout@v3", "with": { "ref": "dev" } },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false } },
+				{ "run": "git config --global user.name \"Brian Jenkins\" && git config --global user.email \"brianjenkins94@users.noreply.github.com\"" },
 				{
 					"env": {
 						"GITHUB_TOKEN": "${{ secrets.PAT }}",
