@@ -74,7 +74,7 @@
 			"needs": ["release"],
 			"strategy": {
 				"matrix": {
-					"package": "${{ needs.changes.outputs.packages }}"
+					"package": "${{ needs.release.outputs.package }}"
 				}
 			},
 			"steps": [
