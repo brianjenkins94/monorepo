@@ -66,7 +66,7 @@
 				}
 			],
 			"outputs": {
-				"package": "${{ matrix.package }}"
+				"packages": "${{ matrix }}"
 			}
 		},
 		"publish": {
@@ -74,7 +74,7 @@
 			"needs": ["release"],
 			"strategy": {
 				"matrix": {
-					"package": "${{ needs.release.outputs.package }}"
+					"package": "${{ needs.release.outputs.packages }}"
 				}
 			},
 			"steps": [
