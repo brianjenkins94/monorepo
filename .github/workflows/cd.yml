@@ -76,6 +76,7 @@
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
 				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "${{ needs.release.outputs.package }}" } },
+				{ "run": "git config user.name \"GitHub Actions\" && git config user.email \"actions@users.noreply.github.com\"" },
 				{
 					"env": {
 						"GITHUB_TOKEN": "${{ secrets.PAT }}",

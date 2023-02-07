@@ -77,7 +77,7 @@ async function attemptParse(response) {
     body = response.text();
   } else if (SaxesParser !== null && contentType.endsWith("xml")) {
     try {
-      SaxesParser ?? (SaxesParser = (await import("./saxes-NOFLGYAS.js"))["default"]["SaxesParser"]);
+      SaxesParser ?? (SaxesParser = (await import("./saxes-OTTZVDBF.js"))["default"]["SaxesParser"]);
       body = parseXml(await response.text());
     } catch (error) {
       SaxesParser = null;
@@ -195,6 +195,8 @@ fido.poll = function(url, query = {}, options = {}, condition = async function(r
     query = {};
   }
   query = {
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     ...Object.fromEntries(new URLSearchParams(url.search)),
     ...query
   };

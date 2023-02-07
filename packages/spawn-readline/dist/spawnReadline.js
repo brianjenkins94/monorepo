@@ -29,6 +29,8 @@ var bash = process.platform === "win32" ? path.join(process.env["ProgramW6432"],
 function spawnReadline(command, args, lineHandler) {
   return new Promise(function(resolve, reject) {
     const process2 = new SpawnPromise(command, args, {
+      // Spawn won't allocate a TTY if detached
+      //"detached": true,
       "encoding": "utf8",
       "shell": bash,
       "stdio": ["inherit", "pipe", "pipe"]
