@@ -74,7 +74,7 @@
 			"runs-on": "ubuntu-latest",
 			"strategy": {
 				"matrix": {
-					"package": "${{ fromJSON(needs.release.outputs.package) }}"
+					"package": "${{ needs.release.outputs.package }}"
 				}
 			},
 			"steps": [
