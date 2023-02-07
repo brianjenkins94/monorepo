@@ -72,10 +72,15 @@
 		"publish": {
 			"runs-on": "ubuntu-latest",
 			"needs": ["release"],
+			"strategy": {
+				"matrix": {
+					"package": "${{ needs.release.outputs.package }}"
+				}
+			},
 			"steps": [
 				{ "uses": "actions/checkout@v3" },
 				{ "uses": "actions/setup-node@v3", "with": { "node-version": 18 } },
-				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "${{ needs.release.outputs.package }}" } },
+				{ "uses": "bahmutov/npm-install@v1", "with": { "useLockFile": false, "working-directory": "${{ matrix.package }}" } },
 				{ "run": "git config user.name \"GitHub Actions\" && git config user.email \"actions@users.noreply.github.com\"" },
 				{
 					"env": {
@@ -83,7 +88,7 @@
 						"NODE_AUTH_TOKEN": "${{ secrets.NPM_TOKEN }}"
 					},
 					"run": "npm run publish || exit 0",
-					"working-directory": "${{ needs.release.outputs.package }}"
+					"working-directory": "${{ matrix.package }}"
 				}
 			]
 		}
