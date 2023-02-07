@@ -1,8 +1,8 @@
 // objectUtils.ts
 function cloneDeep(object, options = {}) {
-  options["keysOnly"] ?? (options["keysOnly"] = false);
-  options["maxDepth"] ?? (options["maxDepth"] = Infinity);
-  options["typesOnly"] ?? (options["typesOnly"] = false);
+  options["keysOnly"] ??= false;
+  options["maxDepth"] ??= Infinity;
+  options["typesOnly"] ??= false;
   if (options["typesOnly"] === true) {
     options["keysOnly"] = false;
   }
@@ -69,7 +69,7 @@ function cloneDeep(object, options = {}) {
   }(object);
 }
 function mergeDeep(args, options = {}) {
-  options["treatObjectsAsNamedArrays"] ?? (options["treatObjectsAsNamedArrays"] = false);
+  options["treatObjectsAsNamedArrays"] ??= false;
   function objectify(array) {
     return function recurse(object) {
       const clone = {};

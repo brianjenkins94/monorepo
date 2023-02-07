@@ -1,9 +1,10 @@
 // find.ts
 import { glob, Glob } from "glob";
 var Find = class {
+  glob;
   constructor(pathOrObject, pattern, options = {}) {
     if (typeof pathOrObject === "string") {
-      options.cwd ?? (options.cwd = pathOrObject);
+      options.cwd ??= pathOrObject;
     } else {
       options.cwd = "/";
       options.cache = this.cacheify(pathOrObject);

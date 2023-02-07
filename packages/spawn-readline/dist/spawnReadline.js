@@ -4,6 +4,7 @@ import { EventEmitter } from "events";
 import { spawn } from "child_process";
 import * as path from "path";
 var SpawnPromise = class extends EventEmitter {
+  command;
   constructor(command, args, options = {}) {
     super();
     this.command = [command, ...args].join(" ");

@@ -15,7 +15,7 @@
   "homepage": "https://github.com/brianjenkins94/ratatouille#readme",
   "scripts": {
     "build": "next build && next export",
-    "publish": "npm run build && mv out docs && git clone https://github.com/brianjenkins94/ratatouille.git && mv out docs && cp -r * ratatouille && cd ratatouille && git add --all && git commit --message \"Automated build\" && git push",
+    "publish": "npm run build && mv out docs && git clone https://github.com/brianjenkins94/ratatouille.git && cp -r * ratatouille && cd ratatouille && git add --all && git commit --message \"Automated build\" && git push",
     "start": "next dev"
   },
   "dependencies": {
@@ -25,7 +25,6 @@
     "react": "^18"
   },
   "devDependencies": {
-    "@types/node": "latest",
     "@types/react-dom": "latest",
     "@types/react": "latest",
     "@typescript-eslint/eslint-plugin": "latest",

@@ -20,9 +20,10 @@
     "update": "node scripts/update.mjs"
   },
   "devDependencies": {
+    "@tsconfig/node-lts": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "eslint": "^7.32.0",
+    "eslint": "latest",
     "tsup": "latest",
     "turbo": "latest",
     "typescript": "latest"
