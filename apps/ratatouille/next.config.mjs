@@ -9,8 +9,6 @@ const __dirname = path.dirname(__filename);
 // TODO: Extract to `./config`
 const __root = __dirname;
 
-//const withTranspileModules = transpileModules(fs.readdirSync(path.join(__root, "..", "..", "packages")));
-
 const contentSecurityPolicyHeaders = {
 	"Content-Security-Policy": Object.entries({
 		"default-src": "'self'",
@@ -70,6 +68,7 @@ export default {
 	"rewrites": async function() {
 		return [];
 	},
+	"transpilePackages": ["fido"],
 	"webpack": function(config, options) {
 		config.optimization.minimize = process.env["NODE_ENV"] === "production";
 
