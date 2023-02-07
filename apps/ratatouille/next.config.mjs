@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 // TODO: Extract to `./config`
 const __root = __dirname;
-
+//
 //const withTranspileModules = transpileModules(fs.readdirSync(path.join(__root, "..", "..", "packages")));
 
 const contentSecurityPolicyHeaders = {
