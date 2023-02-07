@@ -16,10 +16,9 @@
     "glob": "github:isaacs/node-glob#v9"
   },
   "devDependencies": {
-    "@types/node": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "eslint": "^7.32.0",
+    "eslint": "latest",
     "ts-node": "latest",
     "tsup": "latest",
     "typescript": "latest"

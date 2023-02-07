@@ -1,21 +1,22 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "incremental": true
+    "incremental": true,
+    "jsx": "preserve"
   },
-	"include": [
-		"next-env.d.ts",
-		"**/*.ts",
-		"**/*.tsx"
-	],
-	"exclude": [
-		"node_modules"
-	],
-	"ts-node": {
-		"transpileOnly": true,
-		"files": true,
-		"compilerOptions": {
-			"jsx": "react"
-		}
-	}
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "jsx": "react"
+    }
+  }
 }
