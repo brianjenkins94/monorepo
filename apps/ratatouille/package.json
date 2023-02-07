@@ -19,7 +19,6 @@
     "start": "next dev"
   },
   "dependencies": {
-    "@next/font": "latest",
     "next": "latest",
     "react-dom": "^18",
     "react": "^18"
