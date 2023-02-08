@@ -12,6 +12,7 @@
 			"esnext"
 		],
 		"module": "ESNext",
+		"moduleResolution": "Node",
 		"noEmit": true,
 		//"noImplicitAny": true,
 		"noImplicitOverride": true,

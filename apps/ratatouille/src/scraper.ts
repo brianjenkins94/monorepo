@@ -6,13 +6,13 @@ let browser;
 let context;
 
 export async function scrape(url) {
-	browser = browser ?? await chromium.launch({
+	browser ??= await chromium.launch({
 		//"devtools": true,
 		"headless": !(Boolean(process.env["CI"]) || process.platform === "win32" || Boolean(process.env["DISPLAY"]))
 		//"downloadsPath": path.join(__root, "downloads")
 	});
 
-	context = context ?? await browser.newContext();
+	context ??= await browser.newContext();
 
 	const page = await context.newPage();
 
