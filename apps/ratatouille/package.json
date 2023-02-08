@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "cheerio": "latest",
-    "chromium-playwright": "latest",
     "fido": "*",
     "next": "latest",
+    "playwright-chromium": "latest",
     "react-dom": "^18",
     "react": "^18"
   },
