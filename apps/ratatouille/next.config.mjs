@@ -41,6 +41,8 @@ const contentSecurityPolicyHeaders = {
 };
 
 export default {
+	"assetPrefix": "/ratatouille/",
+	"basePath": "/ratatouille",
 	"env": {
 		"NEXT_PUBLIC_API_MOCKING": "enabled"
 	},
