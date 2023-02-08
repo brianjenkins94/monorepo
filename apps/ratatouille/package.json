@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/brianjenkins94/ratatouille#readme",
   "scripts": {
-    "build": "next build && next export && npm run postexport",
+    "build": "next build --no-lint && next export && npm run postexport",
     "postexport": "find out -name \"*.html\" -exec sed -i \"s/\\\"\\/_next\\//\\\"\\/ratatouille\\/_next\\//g\" \"{}\" \\;",
     "publish": "npm run build && git clone https://github.com/brianjenkins94/ratatouille.git && rsync --exclude=\".git/\" --exclude=\"ratatouille/\" --recursive ./ ratatouille && sed \"s/monorepo/ratatouille/\" ../../.git/config > ratatouille/.git/config && cd ratatouille && mv -f out docs && git add --all && git commit --message \"Automated build\" && git push origin main",
     "start": "next dev"
