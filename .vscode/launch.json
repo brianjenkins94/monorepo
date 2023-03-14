@@ -10,8 +10,7 @@
             "name": "Launch Program",
 			"runtimeArgs": [
 				"--experimental-specifier-resolution=node",
-				"--loader",
-				"ts-node/esm"
+				"--loader=ts-node/esm"
 			],
 			"args": [
 				"${relativeFile}",
